@@ -1,3 +1,6 @@
 [submodule "external/nmslib"]
 	path = external/nmslib
 	url = https://github.com/jvkersch/nmslib
+[submodule "external/parasail"]
+	path = external/parasail
+	url = https://github.com/jeffdaily/parasail

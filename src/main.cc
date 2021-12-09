@@ -1,0 +1,37 @@
+#include <iostream>
+
+#include "build_index.h"
+#include "command_parser.h"
+#include "errors.h"
+
+int main(int argc, char *argv[])
+{
+    Parameters params;
+
+    try
+    {
+        params = parse_command_line_args(argc, argv);
+    }
+    catch (ExitError &e)
+    {
+        std::cerr << e.what();
+        return e.exitcode();
+    }
+
+    std::cout << "run mode: " << static_cast<int>(params.mode) << std::endl;
+
+    switch (params.mode)
+    {
+    case RunMode::build:
+        BuildIndexCommand(params).run();
+        break;
+    case RunMode::query:
+        assert(false);
+        break;
+    default:
+        break;
+        // do nothing
+    }
+
+    return 0;
+}

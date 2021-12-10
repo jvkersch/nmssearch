@@ -7,6 +7,9 @@
 #include "space/space_string.h"
 #include "global.h"
 
+// local
+#include "align.h"
+
 class NeedlemanWunschSpace : public similarity::StringSpace<int>
 {
 public:
@@ -14,6 +17,9 @@ public:
     virtual ~NeedlemanWunschSpace() {}
 
     virtual std::string StrDesc() const;
+
+private:
+    Aligner _aligner; // TODO: Configure this external and inject into space.
 
 protected:
     virtual int HiddenDistance(const similarity::Object *obj1, const similarity::Object *obj2) const;

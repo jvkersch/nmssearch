@@ -6,11 +6,11 @@
 class BuildIndexCommand
 {
 public:
-    BuildIndexCommand(const Parameters &params) : _params(params) {}
+    BuildIndexCommand(const Parameters &params) : m_params(params) {}
     void run() const;
 
 private:
-    const Parameters &_params;
+    const Parameters &m_params;
 };
 
 #endif // _BUILD_COMMAND_H_

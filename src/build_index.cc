@@ -1,3 +1,4 @@
+#include <filesystem>
 #include <iostream>
 
 // nmslib
@@ -11,21 +12,9 @@
 #include "build_index.h"
 #include "nw_space.h"
 #include "sequence_reader.h"
+#include "util.h"
 
-
-similarity::ObjectVector CollectSequences(FASTASequenceReader &reader, const NeedlemanWunschSpace &space)
-{
-    similarity::ObjectVector data;
-
-    FASTASequence seq;
-    size_t i = 0;
-    while ((seq = reader.next()) != FASTASequenceReader::UNK)
-    {
-        similarity::Object *item = space.CreateObjFromStr(i++, -1, seq.sequence, nullptr).release();
-        data.push_back(item);
-    }
-    return data;
-}
+namespace fs = std::filesystem;
 
 void BuildIndexCommand::run() const
 {
@@ -51,9 +40,15 @@ void BuildIndexCommand::run() const
     similarity::AnyParams queryParams({"alphaLeft=1.0", "alphaRight=1.0"});
 
     index->CreateIndex(indexParams);
-    index->SaveIndex("my_vptree.bin");
+
+    fs::remove_all("my_vptree");
+    fs::create_directories("my_vptree");
+    fs::copy(m_params.sequences, "my_vptree/sequences.fa");
+    index->SaveIndex("my_vptree/index.bin");
 
     std::cout << "Saved index to my_vptree.bin" << std::endl; // TODO make output name a parameter.
+
+    delete index; // TODO wrap in unique_ptr
 
     for (auto *item : dataset)
     {

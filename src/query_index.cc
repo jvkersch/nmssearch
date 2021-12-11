@@ -19,7 +19,7 @@
 
 namespace fs = std::filesystem;
 
-void display(const similarity::KNNQueue<int> *results, const SequenceContainer& sequences)
+void display(const similarity::KNNQueue<int> *results, const SequenceContainer &sequences)
 {
     std::unique_ptr<similarity::KNNQueue<int>> clone(results->Clone());
     std::cout << "Obtained " << clone->Size() << " results." << std::endl;
@@ -41,7 +41,7 @@ void QueryIndexCommand::run() const
     FASTASequenceReader reader(sequences_fname);
     SequenceContainer database(reader);
 
-      // Read query sequences
+    // Read query sequences
     FASTASequenceReader query_reader(m_params.query);
     SequenceContainer queries(query_reader);
 
@@ -50,13 +50,13 @@ void QueryIndexCommand::run() const
     int seed = 1234;
     similarity::initLibrary(seed, LIB_LOGSTDERR, NULL);
 
-    similarity::Index<int> *index =
+    auto index = std::unique_ptr<similarity::Index<int>>(
         similarity::MethodFactoryRegistry<int>::Instance().CreateMethod(
             true,
             "vptree",
             "custom",
             nwspace,
-            database.getDataset());
+            database.getDataset()));
 
     index->LoadIndex(index_fname);
 
@@ -72,6 +72,4 @@ void QueryIndexCommand::run() const
         index->Search(&knnquery);
         display(knnquery.Result(), database);
     }
-
-    delete index; // TODO wrap in unique_ptr
 }

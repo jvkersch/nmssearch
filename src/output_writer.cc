@@ -1,22 +1,32 @@
+#include <iomanip>
 #include <iostream>
+#include <vector>
 
 #include "sequence_reader.h"
 #include "output_writer.h"
 
 #include "align.h"
 
-OutputWriter::OutputWriter(const SequenceContainer &sequences) : m_sequences(sequences) {}
-
-void OutputWriter::display(const FASTASequence &query, size_t targetId) const
+void OutputWriter::display(const AlignStats &r) const
 {
-    auto target = m_sequences[targetId];
+    std::cout << r.queryId << '\t'
+              << r.subjectId << '\t'
+              << std::fixed << std::setprecision(2) << r.pctIdentity << '\t'
+              << r.alignmentLength << '\t'
+              << r.mismatches << '\t'
+              << r.gapOpenings << '\t'
+              << r.queryStart << '\t'
+              << r.queryEnd << '\t'
+              << r.subjectStart << '\t'
+              << r.subjectEnd << '\t'
+              << r.EValue << '\t'
+              << r.bitScore << std::endl;
+}
 
-    Aligner aligner;
-    double dist = aligner.align_stats(
-        query.sequence.c_str(),
-        query.sequence.size(),
-        target.sequence.c_str(),
-        target.sequence.size());
-
-    std::cout << "query: " << query.name << ", target: " << target.name << ", pct similarity:" << dist << std::endl;
+void OutputWriter::display(const std::vector<AlignStats> &rs) const
+{
+    for (const auto &r : rs)
+    {
+        display(r);
+    }
 }

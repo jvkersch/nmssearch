@@ -12,20 +12,24 @@
 // local
 #include "query_index.h"
 #include "nw_space.h"
+#include "output_writer.h"
 #include "sequence_container.h"
 #include "sequence_reader.h"
 #include "util.h"
 
-
-void display(const similarity::KNNQueue<int> *results, const SequenceContainer &sequences)
+void display(const FASTASequence &query,
+             const similarity::KNNQueue<int> *results,
+             const SequenceContainer &sequences)
 {
     std::unique_ptr<similarity::KNNQueue<int>> clone(results->Clone());
     std::cout << "Obtained " << clone->Size() << " results." << std::endl;
 
+    OutputWriter writer(sequences);
+
     while (!clone->Empty())
     {
         auto *result = clone->Pop();
-        std::cout << sequences[result->id()].name << std::endl;
+        writer.display(query, result->id());
     }
 }
 
@@ -66,6 +70,7 @@ void QueryIndexCommand::run() const
     { // TODO make batch
         similarity::KNNQuery<int> knnquery(nwspace, query, k);
         index->Search(&knnquery);
-        display(knnquery.Result(), database);
+
+        display(queries[query->id()], knnquery.Result(), database);
     }
 }

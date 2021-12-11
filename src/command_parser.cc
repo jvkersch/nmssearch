@@ -46,7 +46,6 @@ Parameters parse_command_line_args(int argc, char **argv)
     if (build_sc->parsed())
     {
         p.mode = RunMode::build;
-        // p.sequences = sequences;
         p.sequences_path = sequences_path;
     }
     else if (query_sc->parsed())

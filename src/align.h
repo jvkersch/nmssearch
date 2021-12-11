@@ -9,6 +9,7 @@ public:
     Aligner();
 
     int align(const char *s1, size_t len1, const char *s2, size_t len2) const;
+    double align_stats(const char *s1, size_t len1, const char *s2, size_t len2) const;
 
 private:
     // TODO: Make alignment matrix and gap penalties configurable

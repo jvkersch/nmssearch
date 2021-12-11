@@ -5,7 +5,7 @@
 
 #include "parasail/io.h"
 
-class FASTASequence
+class FASTASequence  // TODO Rename to something like "nucleotide sequence"
 {
 public:
     std::string name;

@@ -21,8 +21,8 @@ void BuildIndexCommand::run() const
 {
     NeedlemanWunschSpace nwspace;
 
-    std::cout << "Building index for " << m_params.sequences << std::endl;
-    FASTASequenceReader reader(m_params.sequences);
+    std::cout << "Building index for " << m_params.sequences_path << std::endl;
+    FASTASequenceReader reader(m_params.sequences_path);
     SequenceContainer database(reader);
 
     std::cout << "Read " << database.size() << " sequences." << std::endl;
@@ -45,7 +45,7 @@ void BuildIndexCommand::run() const
 
     fs::remove_all("my_vptree");
     fs::create_directories("my_vptree");
-    fs::copy(m_params.sequences, "my_vptree/sequences.fa");
+    fs::copy(m_params.sequences_path, "my_vptree/sequences.fa");
     index->SaveIndex("my_vptree/index.bin");
 
     std::cout << "Saved index to my_vptree.bin" << std::endl; // TODO make output name a parameter.

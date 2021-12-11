@@ -1,4 +1,3 @@
-#include <filesystem>
 #include <iostream>
 
 // nmslib
@@ -17,7 +16,6 @@
 #include "sequence_reader.h"
 #include "util.h"
 
-namespace fs = std::filesystem;
 
 void display(const similarity::KNNQueue<int> *results, const SequenceContainer &sequences)
 {
@@ -35,14 +33,12 @@ void QueryIndexCommand::run() const
 {
     NeedlemanWunschSpace nwspace;
 
-    auto sequences_fname = fs::path(m_params.database) / "sequences.fa";
-    auto index_fname = fs::path(m_params.database) / "index.bin";
-
-    FASTASequenceReader reader(sequences_fname);
+    // Read database
+    FASTASequenceReader reader(m_params.database_path / "sequences.fa");
     SequenceContainer database(reader);
 
     // Read query sequences
-    FASTASequenceReader query_reader(m_params.query);
+    FASTASequenceReader query_reader(m_params.query_path);
     SequenceContainer queries(query_reader);
 
     std::cout << "Loaded " << queries.size() << " sequences." << std::endl;
@@ -58,7 +54,7 @@ void QueryIndexCommand::run() const
             nwspace,
             database.getDataset()));
 
-    index->LoadIndex(index_fname);
+    index->LoadIndex(m_params.database_path / "index.bin");
 
     similarity::AnyParams queryParams({"alphaLeft=1.0", "alphaRight=1.0"});
     index->SetQueryTimeParams(queryParams);

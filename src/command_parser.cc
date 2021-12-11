@@ -1,9 +1,12 @@
 #include <iostream>
+#include <filesystem>
 #include <sstream>
 #include "CLI11.hpp"
 
 #include "command_parser.h"
 #include "errors.h"
+
+namespace fs = std::filesystem;
 
 Parameters parse_command_line_args(int argc, char **argv)
 {
@@ -12,15 +15,15 @@ Parameters parse_command_line_args(int argc, char **argv)
 
     CLI::App *build_sc = app.add_subcommand("build", "build search index");
 
-    std::string sequences;
-    build_sc->add_option("sequences", sequences, "FASTA file to index"); // TODO make required
+    fs::path sequences_path;
+    build_sc->add_option("sequences", sequences_path, "FASTA file to index"); // TODO make required
 
     CLI::App *query_sc = app.add_subcommand("query", "query previously-built search index");
 
-    std::string database;
-    query_sc->add_option("database", database, "Database to query"); // TODO make required
-    std::string query;
-    query_sc->add_option("query", query, "Query file in FASTA format"); // TODO make required
+    fs::path database_path;
+    query_sc->add_option("database", database_path, "Database to query"); // TODO make required
+    fs::path query_path;
+    query_sc->add_option("query", query_path, "Query file in FASTA format"); // TODO make required
 
     try
     {
@@ -43,13 +46,14 @@ Parameters parse_command_line_args(int argc, char **argv)
     if (build_sc->parsed())
     {
         p.mode = RunMode::build;
-        p.sequences = sequences;
+        // p.sequences = sequences;
+        p.sequences_path = sequences_path;
     }
     else if (query_sc->parsed())
     {
         p.mode = RunMode::query;
-        p.database = database;
-        p.query = query;
+        p.database_path = database_path;
+        p.query_path = query_path;
     }
 
     return p;

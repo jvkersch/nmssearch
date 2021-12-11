@@ -59,10 +59,10 @@ void QueryIndexCommand::run() const
     FASTASequenceReader query_reader(m_params.query_path);
     SequenceContainer queries(query_reader);
 
-    std::cout << "Loaded " << queries.size() << " sequences." << std::endl;
+    std::cerr << "Loaded " << queries.size() << " query sequence(s)." << std::endl;
 
     int seed = 1234;
-    similarity::initLibrary(seed, LIB_LOGSTDERR, NULL);
+    similarity::initLibrary(seed, LIB_LOGNONE, NULL);
 
     auto index = std::unique_ptr<similarity::Index<int>>(
         similarity::MethodFactoryRegistry<int>::Instance().CreateMethod(
@@ -77,7 +77,7 @@ void QueryIndexCommand::run() const
     similarity::AnyParams queryParams({"alphaLeft=1.0", "alphaRight=1.0"});
     index->SetQueryTimeParams(queryParams);
 
-    std::cout << "Loaded index for " << database.size() << " sequences" << std::endl;
+    std::cerr << "Loaded index for " << database.size() << " sequences" << std::endl;
 
     OutputWriter writer;
 

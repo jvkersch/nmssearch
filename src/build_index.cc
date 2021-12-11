@@ -21,14 +21,14 @@ void BuildIndexCommand::run() const
 {
     NeedlemanWunschSpace nwspace;
 
-    std::cout << "Building index for " << m_params.sequences_path << std::endl;
+    std::cerr << "Building index for " << m_params.sequences_path << std::endl;
     FASTASequenceReader reader(m_params.sequences_path);
     SequenceContainer database(reader);
 
-    std::cout << "Read " << database.size() << " sequences." << std::endl;
+    std::cerr << "Read " << database.size() << " sequences." << std::endl;
 
     int seed = 1234;
-    similarity::initLibrary(seed, LIB_LOGSTDERR, NULL);
+    similarity::initLibrary(seed, LIB_LOGNONE, NULL);
 
     auto index = std::unique_ptr<similarity::Index<int>>(
         similarity::MethodFactoryRegistry<int>::Instance().CreateMethod(
@@ -48,5 +48,5 @@ void BuildIndexCommand::run() const
     fs::copy(m_params.sequences_path, "my_vptree/sequences.fa");
     index->SaveIndex("my_vptree/index.bin");
 
-    std::cout << "Saved index to my_vptree.bin" << std::endl; // TODO make output name a parameter.
+    std::cerr << "Saved index to my_vptree.bin" << std::endl; // TODO make output name a parameter.
 }

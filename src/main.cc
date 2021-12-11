@@ -19,8 +19,6 @@ int main(int argc, char *argv[])
         return e.exitcode();
     }
 
-    std::cout << "run mode: " << static_cast<int>(params.mode) << std::endl;
-
     switch (params.mode)
     {
     case RunMode::build:

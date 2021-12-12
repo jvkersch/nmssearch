@@ -21,7 +21,10 @@ void BuildIndexCommand::run() const
 {
     NeedlemanWunschSpace nwspace;
 
-    std::cerr << "Building index for " << m_params.sequences_path << std::endl;
+    std::cerr << "Building index for " << m_params.sequences_path << " using algorithm "
+              << IndexAlgorithmToString(m_params.index_algorithm) << std::endl;
+
+    // Read sequences
     FASTASequenceReader reader(m_params.sequences_path);
     SequenceContainer database(reader);
 
@@ -30,23 +33,44 @@ void BuildIndexCommand::run() const
     int seed = 1234;
     similarity::initLibrary(seed, LIB_LOGNONE, NULL);
 
-    auto index = std::unique_ptr<similarity::Index<int>>(
-        similarity::MethodFactoryRegistry<int>::Instance().CreateMethod(
-            true,
-            "vptree",
-            "custom",
-            nwspace,
-            database.getDataset()));
+    // Create index
+    std::unique_ptr<similarity::Index<int>> index;
+    similarity::AnyParams indexParams;
+    fs::path filename;  // TODO make configurable
 
-    similarity::AnyParams indexParams({"bucketSize=1", "selectPivotAttempts=1"});
-    similarity::AnyParams queryParams({"alphaLeft=1.0", "alphaRight=1.0"});
+    if (m_params.index_algorithm == IndexAlgorithm::hnsw)
+    {
+        index.reset(
+            similarity::MethodFactoryRegistry<int>::Instance().CreateMethod(
+                true,
+                "hnsw",
+                "custom",
+                nwspace,
+                database.getDataset()));
+        
+        filename = "hnsw";
+    }
+    else if (m_params.index_algorithm == IndexAlgorithm::vptree)
+    {
+        index.reset(
+            similarity::MethodFactoryRegistry<int>::Instance().CreateMethod(
+                true,
+                "vptree",
+                "custom",
+                nwspace,
+                database.getDataset()));
+
+        indexParams = similarity::AnyParams({"bucketSize=1", "selectPivotAttempts=1"});
+        filename = "vptree";
+    }
 
     index->CreateIndex(indexParams);
 
-    fs::remove_all("my_vptree");
-    fs::create_directories("my_vptree");
-    fs::copy(m_params.sequences_path, "my_vptree/sequences.fa");
-    index->SaveIndex("my_vptree/index.bin");
+    // Persist the index
+    fs::remove_all(filename);
+    fs::create_directories(filename);
+    fs::copy(m_params.sequences_path, filename/"sequences.fa");
+    index->SaveIndex(filename / "index.bin");
 
-    std::cerr << "Saved index to my_vptree.bin" << std::endl; // TODO make output name a parameter.
+    std::cerr << "Saved index to " << filename << std::endl; // TODO make output name a parameter.
 }

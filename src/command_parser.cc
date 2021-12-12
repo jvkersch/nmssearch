@@ -8,10 +8,29 @@
 
 namespace fs = std::filesystem;
 
+IndexAlgorithm stringToIndexAlgorithm(const std::string &algorithm)
+{
+    if (algorithm == "vptree")
+    {
+        return IndexAlgorithm::vptree;
+    }
+    else if (algorithm == "hnsw")
+    {
+        return IndexAlgorithm::hnsw;
+    }
+    else
+    {
+        throw ExitError("invalid algorithm", -1); // TODO make nice
+    }
+}
+
 Parameters parse_command_line_args(int argc, char **argv)
 {
     CLI::App app{"App description"}; // TODO replace by something more appropriate
     app.require_subcommand(1);
+
+    std::string algorithm;
+    app.add_option("--algorithm", algorithm, "algorithm to use for searching/indexing.");
 
     CLI::App *build_sc = app.add_subcommand("build", "build search index");
 
@@ -46,11 +65,13 @@ Parameters parse_command_line_args(int argc, char **argv)
     if (build_sc->parsed())
     {
         p.mode = RunMode::build;
+        p.index_algorithm = stringToIndexAlgorithm(algorithm);
         p.sequences_path = sequences_path;
     }
     else if (query_sc->parsed())
     {
         p.mode = RunMode::query;
+        p.index_algorithm = stringToIndexAlgorithm(algorithm);
         p.database_path = database_path;
         p.query_path = query_path;
     }

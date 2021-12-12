@@ -64,20 +64,36 @@ void QueryIndexCommand::run() const
     int seed = 1234;
     similarity::initLibrary(seed, LIB_LOGNONE, NULL);
 
-    auto index = std::unique_ptr<similarity::Index<int>>(
-        similarity::MethodFactoryRegistry<int>::Instance().CreateMethod(
+    std::unique_ptr<similarity::Index<int>> index;
+    similarity::AnyParams queryParams;
+
+    if (m_params.index_algorithm == IndexAlgorithm::hnsw)
+    {
+        std::cerr << "HERE" << std::endl;
+        index.reset(similarity::MethodFactoryRegistry<int>::Instance().CreateMethod(
+            true,
+            "hnsw",
+            "custom",
+            nwspace,
+            database.getDataset()));
+    }
+    else
+    {
+        index.reset(similarity::MethodFactoryRegistry<int>::Instance().CreateMethod(
             true,
             "vptree",
             "custom",
             nwspace,
             database.getDataset()));
 
-    index->LoadIndex(m_params.database_path / "index.bin");
+        queryParams = similarity::AnyParams({"alphaLeft=1.0", "alphaRight=1.0"});
+    }
 
-    similarity::AnyParams queryParams({"alphaLeft=1.0", "alphaRight=1.0"});
+    index->LoadIndex(m_params.database_path / "index.bin");
     index->SetQueryTimeParams(queryParams);
 
     std::cerr << "Loaded index for " << database.size() << " sequences" << std::endl;
+    std::cerr << "Index type " << IndexAlgorithmToString(m_params.index_algorithm) << std::endl;
 
     OutputWriter writer;
 

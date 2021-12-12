@@ -12,11 +12,19 @@ enum class RunMode
     query
 };
 
+enum class IndexAlgorithm
+{
+    vptree,
+    hnsw
+};
+
 class Parameters
 {
 public:
     RunMode mode;
-    //std::string sequences;
+
+    // The algorithm to be used for indexing and querying.
+    IndexAlgorithm index_algorithm;
 
     // The path to the sequence file to index. Only used in building mode.
     fs::path sequences_path;
@@ -26,5 +34,18 @@ public:
     // The path to the query file. Only used in query mode.
     fs::path query_path;
 };
+
+constexpr const char *IndexAlgorithmToString(IndexAlgorithm algorithm) throw()
+{
+    switch (algorithm)
+    {
+    case IndexAlgorithm::vptree:
+        return "vantage point tree";
+    case IndexAlgorithm::hnsw:
+        return "HNSW";
+    default:
+        throw std::invalid_argument("Invalid algorithm");
+    }
+}
 
 #endif // _PARAMETERS_H_

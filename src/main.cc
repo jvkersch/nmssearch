@@ -2,6 +2,7 @@
 
 #include "build_index.h"
 #include "command_parser.h"
+#include "parameters.h"
 #include "query_index.h"
 #include "errors.h"
 
@@ -18,6 +19,8 @@ int main(int argc, char *argv[])
         std::cerr << e.what();
         return e.exitcode();
     }
+
+    std::cerr << "Algorithm: " << IndexAlgorithmToString(params.index_algorithm) << std::endl;
 
     switch (params.mode)
     {

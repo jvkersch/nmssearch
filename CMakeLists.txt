@@ -5,17 +5,30 @@ set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
+add_subdirectory("external/parasail")
+add_subdirectory("external/nmslib/similarity_search")
+
 project(nmssearch)
 
-add_executable(nmssearch src/main.cc src/nw_space.cc src/command_parser.cc src/build_index.cc src/align.cc src/sequence_reader.cc src/query_index.cc src/sequence_container.cc src/output_writer.cc)
+add_executable(nmssearch 
+    src/main.cc
+    src/nw_space.cc 
+    src/command_parser.cc 
+    src/build_index.cc 
+    src/align.cc 
+    src/sequence_reader.cc 
+    src/query_index.cc 
+    src/sequence_container.cc 
+    src/output_writer.cc)
 
-target_link_libraries(nmssearch "${PROJECT_SOURCE_DIR}/external/nmslib/similarity_search/release/libNonMetricSpaceLib.a")
+# For NMSLIB we have to set the include path manually, since it is not specified in the library CMakeLists.txt
+target_link_libraries(nmssearch PUBLIC NonMetricSpaceLib)
 target_include_directories(nmssearch PRIVATE "${PROJECT_SOURCE_DIR}/external/nmslib/similarity_search/include")
 
 target_include_directories(nmssearch PRIVATE "${PROJECT_SOURCE_DIR}/external/cli11")
 
-target_link_libraries(nmssearch "${PROJECT_SOURCE_DIR}/external/parasail/.libs/libparasail.a")
-target_include_directories(nmssearch PRIVATE "${PROJECT_SOURCE_DIR}/external/parasail")
+target_link_libraries(nmssearch PUBLIC parasail)
 
 find_package(ZLIB)
-target_link_libraries(nmssearch ZLIB::ZLIB)
+target_link_libraries(nmssearch PUBLIC ZLIB::ZLIB)

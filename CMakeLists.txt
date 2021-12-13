@@ -30,5 +30,7 @@ target_include_directories(nmssearch PRIVATE "${PROJECT_SOURCE_DIR}/external/cli
 
 target_link_libraries(nmssearch PUBLIC parasail)
 
-find_package(ZLIB)
-target_link_libraries(nmssearch PUBLIC ZLIB::ZLIB)
+if (UNIX)
+    find_package(ZLIB)
+    target_link_libraries(nmssearch PUBLIC ZLIB::ZLIB)
+endif()

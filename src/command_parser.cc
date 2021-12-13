@@ -26,7 +26,7 @@ IndexAlgorithm stringToIndexAlgorithm(const std::string &algorithm)
 
 Parameters parse_command_line_args(int argc, char **argv)
 {
-    CLI::App app{"App description"}; // TODO replace by something more appropriate
+    CLI::App app{"Sequence indexing and querying using NMSLIB"};
     app.require_subcommand(1);
 
     std::string algorithm;
@@ -35,14 +35,14 @@ Parameters parse_command_line_args(int argc, char **argv)
     CLI::App *build_sc = app.add_subcommand("build", "build search index");
 
     fs::path sequences_path;
-    build_sc->add_option("sequences", sequences_path, "FASTA file to index"); // TODO make required
+    build_sc->add_option("sequences", sequences_path, "FASTA file to index")->required();
 
     CLI::App *query_sc = app.add_subcommand("query", "query previously-built search index");
 
     fs::path database_path;
-    query_sc->add_option("database", database_path, "Database to query"); // TODO make required
+    query_sc->add_option("database", database_path, "Database to query")->required();
     fs::path query_path;
-    query_sc->add_option("query", query_path, "Query file in FASTA format"); // TODO make required
+    query_sc->add_option("query", query_path, "Query file in FASTA format")->required();
 
     try
     {

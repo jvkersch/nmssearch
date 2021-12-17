@@ -44,6 +44,9 @@ CLI::App *AddBuildSubCommand(CLI::App &app, Parameters &params)
     build_sc
         ->add_option("sequences", params.sequences_path, "FASTA file to index")
         ->required();
+    build_sc
+        ->add_option("database", params.database_path, "Output database")
+        ->required();
 
     return build_sc;
 }

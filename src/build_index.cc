@@ -36,7 +36,6 @@ void BuildIndexCommand::run() const
     // Create index
     std::unique_ptr<similarity::Index<int>> index;
     similarity::AnyParams indexParams;
-    fs::path filename;  // TODO make configurable
 
     if (m_params.index_algorithm == IndexAlgorithm::hnsw)
     {
@@ -47,8 +46,6 @@ void BuildIndexCommand::run() const
                 "custom",
                 nwspace,
                 database.getDataset()));
-        
-        filename = "hnsw";
     }
     else if (m_params.index_algorithm == IndexAlgorithm::vptree)
     {
@@ -61,16 +58,16 @@ void BuildIndexCommand::run() const
                 database.getDataset()));
 
         indexParams = similarity::AnyParams({"bucketSize=1", "selectPivotAttempts=1"});
-        filename = "vptree";
     }
 
     index->CreateIndex(indexParams);
 
     // Persist the index
-    fs::remove_all(filename);
-    fs::create_directories(filename);
-    fs::copy(m_params.sequences_path, filename/"sequences.fa");
-    index->SaveIndex(filename / "index.bin");
+    auto db = m_params.database_path;
+    fs::remove_all(db);
+    fs::create_directories(db);
+    fs::copy(m_params.sequences_path, db / "sequences.fa");
+    index->SaveIndex(db / "index.bin");
 
-    std::cerr << "Saved index to " << filename << std::endl; // TODO make output name a parameter.
+    std::cerr << "Saved index to " << db << std::endl;
 }

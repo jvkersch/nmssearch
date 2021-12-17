@@ -28,8 +28,7 @@ public:
 
     // The path to the sequence file to index. Only used in building mode.
     fs::path sequences_path;
-
-    // The path to the database index. Only used in query mode.
+    // The path to the database index. Used in building and query mode.
     fs::path database_path;
     // The path to the query file. Only used in query mode.
     fs::path query_path;

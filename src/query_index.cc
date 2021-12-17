@@ -94,10 +94,9 @@ void QueryIndexCommand::run() const
 
     OutputWriter writer;
 
-    int k = 4; // TODO make configurable
     for (auto query : queries.getDataset())
     { // TODO make batch
-        similarity::KNNQuery<int> knnquery(nwspace, query, k);
+        similarity::KNNQuery<int> knnquery(nwspace, query, m_params.k);
         index->Search(&knnquery);
 
         auto query_results = PrepareQueryResults(queries[query->id()], knnquery.Result(), database, aligner);

@@ -61,6 +61,8 @@ CLI::App *AddQuerySubCommand(CLI::App &app, Parameters &params)
     query_sc
         ->add_option("query", params.query_path, "Query file in FASTA format")
         ->required();
+    query_sc
+        ->add_option("-k", params.k, "Number of results to return per query.");
 
     return query_sc;
 }

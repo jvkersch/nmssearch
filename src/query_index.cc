@@ -64,30 +64,27 @@ void QueryIndexCommand::run() const
     int seed = 1234;
     similarity::initLibrary(seed, LIB_LOGNONE, NULL);
 
-    std::unique_ptr<similarity::Index<int>> index;
+    // Create index
     similarity::AnyParams queryParams;
+    std::string method_name;
 
     if (m_params.index_algorithm == IndexAlgorithm::hnsw)
     {
-        std::cerr << "HERE" << std::endl;
-        index.reset(similarity::MethodFactoryRegistry<int>::Instance().CreateMethod(
-            true,
-            "hnsw",
-            "custom",
-            nwspace,
-            database.getDataset()));
+        method_name = "hnsw";
     }
-    else
+    else if (m_params.index_algorithm == IndexAlgorithm::vptree)
     {
-        index.reset(similarity::MethodFactoryRegistry<int>::Instance().CreateMethod(
-            true,
-            "vptree",
-            "custom",
-            nwspace,
-            database.getDataset()));
-
+        method_name = "vptree";
         queryParams = similarity::AnyParams({"alphaLeft=1.0", "alphaRight=1.0"});
     }
+
+    auto index = std::unique_ptr<similarity::Index<int>>(
+        similarity::MethodFactoryRegistry<int>::Instance().CreateMethod(
+            true,
+            method_name,
+            "custom",
+            nwspace,
+            database.getDataset()));
 
     index->LoadIndex(m_params.database_path / "index.bin");
     index->SetQueryTimeParams(queryParams);

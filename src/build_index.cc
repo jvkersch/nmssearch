@@ -34,31 +34,26 @@ void BuildIndexCommand::run() const
     similarity::initLibrary(seed, LIB_LOGNONE, NULL);
 
     // Create index
-    std::unique_ptr<similarity::Index<int>> index;
     similarity::AnyParams indexParams;
+    std::string method_name;
 
     if (m_params.index_algorithm == IndexAlgorithm::hnsw)
     {
-        index.reset(
-            similarity::MethodFactoryRegistry<int>::Instance().CreateMethod(
-                true,
-                "hnsw",
-                "custom",
-                nwspace,
-                database.getDataset()));
+        method_name = "hnsw";
     }
     else if (m_params.index_algorithm == IndexAlgorithm::vptree)
     {
-        index.reset(
-            similarity::MethodFactoryRegistry<int>::Instance().CreateMethod(
-                true,
-                "vptree",
-                "custom",
-                nwspace,
-                database.getDataset()));
-
+        method_name = "vptree";
         indexParams = similarity::AnyParams({"bucketSize=1", "selectPivotAttempts=1"});
     }
+
+    auto index = std::unique_ptr<similarity::Index<int>>(
+        similarity::MethodFactoryRegistry<int>::Instance().CreateMethod(
+            true,
+            method_name,
+            "custom",
+            nwspace,
+            database.getDataset()));
 
     index->CreateIndex(indexParams);
 

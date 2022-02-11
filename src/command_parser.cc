@@ -67,6 +67,17 @@ CLI::App *AddQuerySubCommand(CLI::App &app, Parameters &params)
     return query_sc;
 }
 
+CLI::App *AddDumpSubCommand(CLI::App &app, Parameters &params)
+{
+    CLI::App *dump_sc = app.add_subcommand("dump", "dump previously-built search index to JSON");
+
+    dump_sc
+        ->add_option("database", params.database_path, "Database to query")
+        ->required();
+
+    return dump_sc;
+}
+
 Parameters parse_command_line_args(int argc, char **argv)
 {
     CLI::App app{"Sequence indexing and querying using NMSLIB"};
@@ -77,6 +88,7 @@ Parameters parse_command_line_args(int argc, char **argv)
     AddToplevelArguments(app, p);
     auto build_sc = AddBuildSubCommand(app, p);
     auto query_sc = AddQuerySubCommand(app, p);
+    auto dump_sc = AddDumpSubCommand(app, p);
 
     try
     {
@@ -101,6 +113,10 @@ Parameters parse_command_line_args(int argc, char **argv)
     else if (query_sc->parsed())
     {
         p.mode = RunMode::query;
+    }
+    else if (dump_sc->parsed())
+    {
+        p.mode = RunMode::dump;
     }
 
     return p;

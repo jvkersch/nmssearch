@@ -2,6 +2,7 @@
 
 #include "build_index.h"
 #include "command_parser.h"
+#include "dump_index.h"
 #include "parameters.h"
 #include "query_index.h"
 #include "errors.h"
@@ -30,6 +31,8 @@ int main(int argc, char *argv[])
     case RunMode::query:
         QueryIndexCommand(params).run();
         break;
+    case RunMode::dump:
+        DumpIndexCommand(params).run();
     default:
         break;
         // do nothing

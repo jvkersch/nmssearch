@@ -8,13 +8,15 @@ jobs:
     - uses: actions/checkout@v2
       with:
         submodules: recursive
-    - name: get-cmake
-      uses: lukka/get-cmake@latest
     - name: ccache
       uses: hendrikmuhs/ccache-action@v1
+    - name: get-cmake
+      uses: lukka/get-cmake@latest
     - name: build with cmake
       uses: lukka/run-cmake@v3
       with:
-        cmakeAppendedArgs: '-DCMAKE_C_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_COMPILER_LAUNCHER=ccache'
+        cmakeAppendedArgs: '-D CMAKE_C_COMPILER_LAUNCHER=ccache -D CMAKE_CXX_COMPILER_LAUNCHER=ccache'
+        buildWithCMake: true
+        buildDirectory: '${{ github.workspace }}/build'
     - name: run tests
       run: build/test_nmssearch

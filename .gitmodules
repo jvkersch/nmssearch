@@ -4,3 +4,6 @@
 [submodule "external/parasail"]
 	path = external/parasail
 	url = https://github.com/jvkersch/parasail
+[submodule "external/Catch2"]
+	path = external/Catch2
+	url = https://github.com/catchorg/Catch2

@@ -7,9 +7,9 @@
 
 #include "align.h"
 
-void OutputWriter::display(const AlignStats &r) const
+void OutputWriter::display(const AlignStats &r, std::ostream& output) const
 {
-    std::cout << r.queryId << '\t'
+    output << r.queryId << '\t'
               << r.subjectId << '\t'
               << std::fixed << std::setprecision(2) << r.pctIdentity << '\t'
               << r.alignmentLength << '\t'
@@ -23,10 +23,10 @@ void OutputWriter::display(const AlignStats &r) const
               << r.bitScore << std::endl;
 }
 
-void OutputWriter::display(const std::vector<AlignStats> &rs) const
+void OutputWriter::display(const std::vector<AlignStats> &rs, std::ostream& output) const
 {
     for (const auto &r : rs)
     {
-        display(r);
+        display(r, output);
     }
 }

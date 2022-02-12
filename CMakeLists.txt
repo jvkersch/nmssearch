@@ -12,8 +12,8 @@ add_subdirectory("external/nmslib/similarity_search")
 
 project(nmssearch)
 
-add_executable(nmssearch 
-    src/main.cc
+# Static library
+add_library(libnmssearch STATIC
     src/nw_space.cc 
     src/command_parser.cc 
     src/build_index.cc 
@@ -23,16 +23,29 @@ add_executable(nmssearch
     src/query_index.cc 
     src/sequence_container.cc 
     src/output_writer.cc)
+set_target_properties(libnmssearch PROPERTIES OUTPUT_NAME "nmssearch")
 
 # For NMSLIB we have to set the include path manually, since it is not specified in the library CMakeLists.txt
-target_link_libraries(nmssearch PUBLIC NonMetricSpaceLib)
-target_include_directories(nmssearch PRIVATE "${PROJECT_SOURCE_DIR}/external/nmslib/similarity_search/include")
+target_link_libraries(libnmssearch PUBLIC NonMetricSpaceLib)
+target_include_directories(libnmssearch PRIVATE "${PROJECT_SOURCE_DIR}/external/nmslib/similarity_search/include")
 
-target_include_directories(nmssearch PRIVATE "${PROJECT_SOURCE_DIR}/external/cli11")
+target_include_directories(libnmssearch PRIVATE "${PROJECT_SOURCE_DIR}/external/cli11")
 
-target_link_libraries(nmssearch PUBLIC parasail)
+target_link_libraries(libnmssearch PUBLIC parasail)
 
 if (UNIX)
     find_package(ZLIB)
-    target_link_libraries(nmssearch PUBLIC ZLIB::ZLIB)
+    target_link_libraries(libnmssearch PUBLIC ZLIB::ZLIB)
 endif()
+
+# Main executable
+add_executable(nmssearch src/main.cc)
+target_link_libraries(nmssearch PRIVATE libnmssearch)
+
+# Unit tests
+add_subdirectory("external/Catch2")
+
+add_executable(test_nmssearch tests/test_output_writer.cc)
+target_include_directories(test_nmssearch PRIVATE "${PROJECT_SOURCE_DIR}/src")
+target_link_libraries(test_nmssearch PRIVATE libnmssearch)
+target_link_libraries(test_nmssearch PRIVATE Catch2::Catch2WithMain)

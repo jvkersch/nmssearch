@@ -100,6 +100,6 @@ void QueryIndexCommand::run() const
         index->Search(&knnquery);
 
         auto query_results = PrepareQueryResults(queries[query->id()], knnquery.Result(), database, aligner);
-        writer.display(query_results);
+        writer.display(query_results, std::cout);
     }
 }

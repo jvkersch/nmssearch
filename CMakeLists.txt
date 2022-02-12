@@ -40,10 +40,12 @@ endif()
 
 # Main executable
 add_executable(nmssearch src/main.cc)
-target_link_libraries(nmssearch libnmssearch)
+target_link_libraries(nmssearch PRIVATE libnmssearch)
 
 # Unit tests
 add_subdirectory("external/Catch2")
 
 add_executable(test_nmssearch tests/test_output_writer.cc)
+target_include_directories(test_nmssearch PRIVATE "${PROJECT_SOURCE_DIR}/src")
+target_link_libraries(test_nmssearch PRIVATE libnmssearch)
 target_link_libraries(test_nmssearch PRIVATE Catch2::Catch2WithMain)

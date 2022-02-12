@@ -16,7 +16,6 @@
 #include "output_writer.h"
 #include "sequence_container.h"
 #include "sequence_reader.h"
-#include "util.h"
 
 std::vector<AlignStats> PrepareQueryResults(
     const FASTASequence &query,

@@ -36,3 +36,9 @@ if (UNIX)
     find_package(ZLIB)
     target_link_libraries(nmssearch PUBLIC ZLIB::ZLIB)
 endif()
+
+# Unit tests
+add_subdirectory("external/Catch2")
+
+add_executable(test_nmssearch tests/test_output_writer.cc)
+target_link_libraries(test_nmssearch PRIVATE Catch2::Catch2WithMain)

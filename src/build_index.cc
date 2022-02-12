@@ -13,7 +13,7 @@
 #include "nw_space.h"
 #include "sequence_container.h"
 #include "sequence_reader.h"
-#include "util.h"
+
 namespace fs = std::filesystem;
 
 void BuildIndexCommand::run() const

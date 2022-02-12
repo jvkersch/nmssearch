@@ -9,7 +9,8 @@ namespace fs = std::filesystem;
 enum class RunMode
 {
     build,
-    query
+    query,
+    dump
 };
 
 enum class IndexAlgorithm

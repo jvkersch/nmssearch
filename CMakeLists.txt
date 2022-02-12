@@ -17,6 +17,7 @@ add_executable(nmssearch
     src/nw_space.cc 
     src/command_parser.cc 
     src/build_index.cc 
+    src/dump_index.cc
     src/align.cc 
     src/sequence_reader.cc 
     src/query_index.cc 

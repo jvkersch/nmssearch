@@ -10,17 +10,18 @@
 // local
 #include "align.h"
 
-template<typename T>
+template<typename AlignerCls>
 class NeedlemanWunschSpace : public similarity::StringSpace<int>
 {
 public:
     explicit NeedlemanWunschSpace() {}
+    explicit NeedlemanWunschSpace(AlignerCls aligner): m_aligner(aligner) {}
     virtual ~NeedlemanWunschSpace() {}
 
     virtual std::string StrDesc() const;
 
 private:
-    T _aligner; // TODO: Configure this external and inject into space.
+    AlignerCls m_aligner;
 
 protected:
     virtual int HiddenDistance(const similarity::Object *obj1, const similarity::Object *obj2) const;
@@ -36,8 +37,8 @@ std::string NeedlemanWunschSpace<T>::StrDesc() const
     return "Needleman-Wunsch distance";
 }
 
-template<typename T>
-int NeedlemanWunschSpace<T>::HiddenDistance(const similarity::Object *obj1, const similarity::Object *obj2) const
+template<typename AlignerCls>
+int NeedlemanWunschSpace<AlignerCls>::HiddenDistance(const similarity::Object *obj1, const similarity::Object *obj2) const
 {
     CHECK(obj1->datalength() > 0);
     CHECK(obj2->datalength() > 0);
@@ -46,7 +47,7 @@ int NeedlemanWunschSpace<T>::HiddenDistance(const similarity::Object *obj1, cons
     const size_t len1 = obj1->datalength() / sizeof(char);
     const size_t len2 = obj2->datalength() / sizeof(char);
 
-    return _aligner.align(x, len1, y, len2);
+    return m_aligner.align(x, len1, y, len2);
 }
 
 #endif // _SPACE_H_

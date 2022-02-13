@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#include "align.h"
+#include "nw_align.h"
 
 class OutputWriter
 {

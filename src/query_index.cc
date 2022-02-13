@@ -21,7 +21,7 @@ std::vector<AlignStats> PrepareQueryResults(
     const FASTASequence &query,
     const similarity::KNNQueue<int> *results,
     const SequenceContainer &sequences,
-    const Aligner &aligner)
+    const NeedlemanWunschAligner &aligner)
 {
     std::vector<AlignStats> query_results;
     std::unique_ptr<similarity::KNNQueue<int>> clone(results->Clone());
@@ -47,8 +47,8 @@ std::vector<AlignStats> PrepareQueryResults(
 
 void QueryIndexCommand::run() const
 {
-    Aligner aligner;
-    AlignmentSpace<Aligner> nwspace(aligner);
+    NeedlemanWunschAligner aligner;
+    AlignmentSpace<NeedlemanWunschAligner> nwspace(aligner);
 
     // Read database
     FASTASequenceReader reader(m_params.database_path / "sequences.fa");

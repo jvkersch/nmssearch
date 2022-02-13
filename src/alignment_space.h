@@ -8,7 +8,7 @@
 #include "global.h"
 
 // local
-#include "align.h"
+//#include "nw_align.h"
 
 template<typename AlignerCls>
 class AlignmentSpace : public similarity::StringSpace<int>

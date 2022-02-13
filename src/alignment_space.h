@@ -11,12 +11,12 @@
 #include "align.h"
 
 template<typename AlignerCls>
-class NeedlemanWunschSpace : public similarity::StringSpace<int>
+class AlignmentSpace : public similarity::StringSpace<int>
 {
 public:
-    explicit NeedlemanWunschSpace() {}
-    explicit NeedlemanWunschSpace(AlignerCls aligner): m_aligner(aligner) {}
-    virtual ~NeedlemanWunschSpace() {}
+    explicit AlignmentSpace() {}
+    explicit AlignmentSpace(AlignerCls aligner): m_aligner(aligner) {}
+    virtual ~AlignmentSpace() {}
 
     virtual std::string StrDesc() const;
 
@@ -26,19 +26,19 @@ private:
 protected:
     virtual int HiddenDistance(const similarity::Object *obj1, const similarity::Object *obj2) const;
 
-    DISABLE_COPY_AND_ASSIGN(NeedlemanWunschSpace);
+    DISABLE_COPY_AND_ASSIGN(AlignmentSpace);
 };
 
 // Implementation
 
 template<typename T>
-std::string NeedlemanWunschSpace<T>::StrDesc() const
+std::string AlignmentSpace<T>::StrDesc() const
 {
     return "Needleman-Wunsch distance";
 }
 
 template<typename AlignerCls>
-int NeedlemanWunschSpace<AlignerCls>::HiddenDistance(const similarity::Object *obj1, const similarity::Object *obj2) const
+int AlignmentSpace<AlignerCls>::HiddenDistance(const similarity::Object *obj1, const similarity::Object *obj2) const
 {
     CHECK(obj1->datalength() > 0);
     CHECK(obj2->datalength() > 0);

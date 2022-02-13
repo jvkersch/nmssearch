@@ -13,7 +13,6 @@ public:
     Aligner();
 
     int align(const char *s1, size_t len1, const char *s2, size_t len2) const;
-
     AlignStats align_stats(const FASTASequence &s1, const FASTASequence &s2) const;
 
 private:

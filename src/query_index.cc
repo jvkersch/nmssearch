@@ -12,7 +12,7 @@
 
 // local
 #include "query_index.h"
-#include "nw_space.h"
+#include "alignment_space.h"
 #include "output_writer.h"
 #include "sequence_container.h"
 #include "sequence_reader.h"
@@ -47,8 +47,8 @@ std::vector<AlignStats> PrepareQueryResults(
 
 void QueryIndexCommand::run() const
 {
-    NeedlemanWunschSpace<Aligner> nwspace;
     Aligner aligner;
+    AlignmentSpace<Aligner> nwspace(aligner);
 
     // Read database
     FASTASequenceReader reader(m_params.database_path / "sequences.fa");

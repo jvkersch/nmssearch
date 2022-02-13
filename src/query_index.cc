@@ -47,7 +47,7 @@ std::vector<AlignStats> PrepareQueryResults(
 
 void QueryIndexCommand::run() const
 {
-    NeedlemanWunschSpace nwspace;
+    NeedlemanWunschSpace<Aligner> nwspace;
     Aligner aligner;
 
     // Read database

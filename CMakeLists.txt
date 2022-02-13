@@ -14,7 +14,6 @@ project(nmssearch)
 
 # Static library
 add_library(libnmssearch STATIC
-    src/nw_space.cc 
     src/command_parser.cc 
     src/build_index.cc 
     src/dump_index.cc

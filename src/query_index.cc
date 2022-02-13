@@ -102,4 +102,8 @@ void QueryIndexCommand::run() const
         auto query_results = PrepareQueryResults(queries[query->id()], knnquery.Result(), database, aligner);
         writer.display(query_results, std::cout);
     }
+
+    if (m_params.instrumentation) {
+        std::cerr << "Calls to aligner: " << aligner.ncalls() << std::endl;
+    }
 }

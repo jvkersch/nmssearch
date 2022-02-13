@@ -11,14 +11,13 @@ template<typename AlignerCls>
 class AlignmentSpace : public similarity::StringSpace<int>
 {
 public:
-    explicit AlignmentSpace() {}
-    explicit AlignmentSpace(AlignerCls aligner): m_aligner(aligner) {}
+    explicit AlignmentSpace(const AlignerCls &aligner): m_aligner(aligner) {}
     virtual ~AlignmentSpace() {}
 
     virtual std::string StrDesc() const;
 
 private:
-    AlignerCls m_aligner;
+    const AlignerCls &m_aligner;
 
 protected:
     virtual int HiddenDistance(const similarity::Object *obj1, const similarity::Object *obj2) const;

@@ -19,7 +19,8 @@ namespace fs = std::filesystem;
 
 void BuildIndexCommand::run() const
 {
-    AlignmentSpace<NeedlemanWunschAligner> nwspace;
+    NeedlemanWunschAligner aligner;
+    AlignmentSpace<NeedlemanWunschAligner> nwspace(aligner);
 
     std::cerr << "Building index for " << m_params.sequences_path << " using algorithm "
               << IndexAlgorithmToString(m_params.index_algorithm) << std::endl;
@@ -65,4 +66,8 @@ void BuildIndexCommand::run() const
     index->SaveIndex(db / "index.bin");
 
     std::cerr << "Saved index to " << db << std::endl;
+
+    if (m_params.instrumentation) {
+        std::cerr << "Calls to aligner: " << aligner.ncalls() << std::endl;
+    }
 }

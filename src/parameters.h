@@ -26,6 +26,8 @@ public:
 
     // The algorithm to be used for indexing and querying.
     IndexAlgorithm index_algorithm;
+    // Whether to run with instrumentation, i.e. logging all calls to distance function.
+    bool instrumentation;
 
     // The path to the sequence file to index. Only used in building mode.
     fs::path sequences_path;

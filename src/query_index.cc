@@ -11,8 +11,9 @@
 #include "params.h"
 
 // local
-#include "query_index.h"
 #include "alignment_space.h"
+#include "query_index.h"
+#include "nw_align.h"
 #include "output_writer.h"
 #include "sequence_container.h"
 #include "sequence_reader.h"

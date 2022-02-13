@@ -11,8 +11,9 @@
 #include "params.h"
 
 // local
+#include "alignment_space.h"
 #include "query_index.h"
-#include "nw_space.h"
+#include "nw_align.h"
 #include "output_writer.h"
 #include "sequence_container.h"
 #include "sequence_reader.h"
@@ -21,7 +22,7 @@ std::vector<AlignStats> PrepareQueryResults(
     const FASTASequence &query,
     const similarity::KNNQueue<int> *results,
     const SequenceContainer &sequences,
-    const Aligner &aligner)
+    const NeedlemanWunschAligner &aligner)
 {
     std::vector<AlignStats> query_results;
     std::unique_ptr<similarity::KNNQueue<int>> clone(results->Clone());
@@ -47,8 +48,8 @@ std::vector<AlignStats> PrepareQueryResults(
 
 void QueryIndexCommand::run() const
 {
-    NeedlemanWunschSpace nwspace;
-    Aligner aligner;
+    NeedlemanWunschAligner aligner;
+    AlignmentSpace<NeedlemanWunschAligner> nwspace(aligner);
 
     // Read database
     FASTASequenceReader reader(m_params.database_path / "sequences.fa");
@@ -100,5 +101,9 @@ void QueryIndexCommand::run() const
 
         auto query_results = PrepareQueryResults(queries[query->id()], knnquery.Result(), database, aligner);
         writer.display(query_results, std::cout);
+    }
+
+    if (m_params.instrumentation) {
+        std::cerr << "Calls to aligner: " << aligner.ncalls() << std::endl;
     }
 }

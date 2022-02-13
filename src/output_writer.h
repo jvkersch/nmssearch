@@ -2,8 +2,9 @@
 #define _OUTPUT_WRITER_H_
 
 #include <iostream>
+#include <vector>
 
-#include "align.h"
+#include "alignment_stats.h"
 
 class OutputWriter
 {

@@ -9,8 +9,9 @@
 #include "params.h"
 
 // local
+#include "nw_align.h"
 #include "build_index.h"
-#include "nw_space.h"
+#include "alignment_space.h"
 #include "sequence_container.h"
 #include "sequence_reader.h"
 
@@ -18,7 +19,8 @@ namespace fs = std::filesystem;
 
 void BuildIndexCommand::run() const
 {
-    NeedlemanWunschSpace nwspace;
+    NeedlemanWunschAligner aligner;
+    AlignmentSpace<NeedlemanWunschAligner> nwspace(aligner);
 
     std::cerr << "Building index for " << m_params.sequences_path << " using algorithm "
               << IndexAlgorithmToString(m_params.index_algorithm) << std::endl;
@@ -64,4 +66,8 @@ void BuildIndexCommand::run() const
     index->SaveIndex(db / "index.bin");
 
     std::cerr << "Saved index to " << db << std::endl;
+
+    if (m_params.instrumentation) {
+        std::cerr << "Calls to aligner: " << aligner.ncalls() << std::endl;
+    }
 }

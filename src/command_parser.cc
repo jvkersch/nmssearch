@@ -35,6 +35,12 @@ void AddToplevelArguments(CLI::App &app, Parameters &params)
             params.index_algorithm = stringToIndexAlgorithm(algorithm);
         },
         "algorithm to use for searching/indexing.");
+
+    app.add_flag(
+        "--instrumentation",
+        params.instrumentation,
+        "Whether to log calls to distance function"
+    );
 }
 
 CLI::App *AddBuildSubCommand(CLI::App &app, Parameters &params)

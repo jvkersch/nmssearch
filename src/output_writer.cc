@@ -5,7 +5,7 @@
 #include "sequence_reader.h"
 #include "output_writer.h"
 
-#include "align.h"
+#include "nw_align.h"
 
 void OutputWriter::display(const AlignStats &r, std::ostream& output) const
 {

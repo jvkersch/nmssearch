@@ -7,17 +7,17 @@
 #include "space/space_string.h"
 #include "global.h"
 
-template<typename AlignerCls>
+template<typename Aligner>
 class AlignmentSpace : public similarity::StringSpace<int>
 {
 public:
-    explicit AlignmentSpace(const AlignerCls &aligner): m_aligner(aligner) {}
+    explicit AlignmentSpace(const Aligner &aligner): m_aligner(aligner) {}
     virtual ~AlignmentSpace() {}
 
     virtual std::string StrDesc() const;
 
 private:
-    const AlignerCls &m_aligner;
+    const Aligner &m_aligner;
 
 protected:
     virtual int HiddenDistance(const similarity::Object *obj1, const similarity::Object *obj2) const;
@@ -27,14 +27,14 @@ protected:
 
 // Implementation
 
-template<typename T>
-std::string AlignmentSpace<T>::StrDesc() const
+template<typename Aligner>
+std::string AlignmentSpace<Aligner>::StrDesc() const
 {
-    return "Needleman-Wunsch distance";
+    return "Alignment-based distance";
 }
 
-template<typename AlignerCls>
-int AlignmentSpace<AlignerCls>::HiddenDistance(const similarity::Object *obj1, const similarity::Object *obj2) const
+template<typename Aligner>
+int AlignmentSpace<Aligner>::HiddenDistance(const similarity::Object *obj1, const similarity::Object *obj2) const
 {
     CHECK(obj1->datalength() > 0);
     CHECK(obj2->datalength() > 0);

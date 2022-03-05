@@ -23,19 +23,24 @@ int main(int argc, char *argv[])
 
     std::cerr << "Algorithm: " << IndexAlgorithmToString(params.index_algorithm) << std::endl;
 
-    switch (params.mode)
-    {
-    case RunMode::build:
-        BuildIndexCommand(params).run();
-        break;
-    case RunMode::query:
-        QueryIndexCommand(params).run();
-        break;
-    case RunMode::dump:
-        DumpIndexCommand(params).run();
-    default:
-        break;
-        // do nothing
+    try {
+        switch (params.mode)
+        {
+        case RunMode::build:
+            BuildIndexCommand(params).run();
+            break;
+        case RunMode::query:
+            QueryIndexCommand(params).run();
+            break;
+        case RunMode::dump:
+            DumpIndexCommand(params).run();
+        default:
+            break;
+            // do nothing
+        }
+    } catch (const std::exception &e) {
+        std::cerr << e.what() << std::endl;
+        return -1;
     }
 
     return 0;

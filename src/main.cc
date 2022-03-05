@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     catch (ExitError &e)
     {
         std::cerr << e.what();
-        return e.exitcode();
+        return -1;
     }
 
     std::cerr << "Algorithm: " << IndexAlgorithmToString(params.index_algorithm) << std::endl;

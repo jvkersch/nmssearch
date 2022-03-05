@@ -9,21 +9,13 @@
 
 int main(int argc, char *argv[])
 {
-    Parameters params;
-
     try
     {
+        Parameters params;
         params = parse_command_line_args(argc, argv);
-    }
-    catch (Error &e)
-    {
-        std::cerr << e.what();
-        return -1;
-    }
-
-    std::cerr << "Algorithm: " << IndexAlgorithmToString(params.index_algorithm) << std::endl;
-
-    try {
+  
+        std::cerr << "Algorithm: " << IndexAlgorithmToString(params.index_algorithm) << std::endl;
+   
         switch (params.mode)
         {
         case RunMode::build:

@@ -32,6 +32,7 @@ IndexAlgorithm stringToIndexAlgorithm(const std::string &algorithm)
 
 void AddToplevelArguments(CLI::App &app, Parameters &params)
 {
+    params.index_algorithm = IndexAlgorithm::hnsw; // the default, will be overwritten if set
     app.add_option_function<std::string>(
         "--algorithm",
         [&params](const std::string &algorithm)

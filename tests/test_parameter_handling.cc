@@ -24,7 +24,7 @@ TEST_CASE( "command-line arguments are handled", "[parameters]" ) {
         REQUIRE(params.index_algorithm == IndexAlgorithm::bruteforce);
     }
 
-    SECTION("algorithm optional parameter defaults to vptree") {
+    SECTION("algorithm optional parameter defaults to hnsw") {
         
         char const *argv[] = {
             "dummy",

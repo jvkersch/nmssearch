@@ -27,6 +27,7 @@ public:
 class FASTASequenceReader
 {
 public:
+    FASTASequenceReader();
     FASTASequenceReader(const std::string &filename);
     ~FASTASequenceReader();
 

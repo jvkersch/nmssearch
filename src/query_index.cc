@@ -9,6 +9,7 @@
 #include "methodfactory.h"
 #include "object.h"
 #include "params.h"
+#include "factory/init_methods.h"
 
 // local
 #include "alignment_space.h"
@@ -52,7 +53,11 @@ void QueryIndexCommand::run() const
     AlignmentSpace<NeedlemanWunschAligner> nwspace(aligner);
 
     // Read database
-    FASTASequenceReader reader(m_params.database_path / "sequences.fa");
+    auto path = m_params.database_path;
+    if (m_params.index_algorithm != IndexAlgorithm::bruteforce) {
+        path /= "sequences.fa";
+    }
+    FASTASequenceReader reader(path);
     SequenceContainer database(reader);
 
     // Read query sequences
@@ -70,12 +75,16 @@ void QueryIndexCommand::run() const
 
     if (m_params.index_algorithm == IndexAlgorithm::hnsw)
     {
-        method_name = "hnsw";
+        method_name = METH_HNSW;
     }
     else if (m_params.index_algorithm == IndexAlgorithm::vptree)
     {
-        method_name = "vptree";
+        method_name = METH_VPTREE;
         queryParams = similarity::AnyParams({"alphaLeft=1.0", "alphaRight=1.0"});
+    }
+    else if (m_params.index_algorithm == IndexAlgorithm::bruteforce)
+    {
+        method_name = METH_SEQ_SEARCH;
     }
 
     auto index = std::unique_ptr<similarity::Index<int>>(
@@ -86,7 +95,10 @@ void QueryIndexCommand::run() const
             nwspace,
             database.getDataset()));
 
-    index->LoadIndex(m_params.database_path / "index.bin");
+    if (m_params.index_algorithm != IndexAlgorithm::bruteforce) {
+        index->LoadIndex(m_params.database_path / "index.bin");
+    }
+    
     index->SetQueryTimeParams(queryParams);
 
     std::cerr << "Loaded index for " << database.size() << " sequences" << std::endl;

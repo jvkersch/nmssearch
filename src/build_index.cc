@@ -25,6 +25,12 @@ void BuildIndexCommand::run() const
     std::cerr << "Building index for " << m_params.sequences_path << " using algorithm "
               << IndexAlgorithmToString(m_params.index_algorithm) << std::endl;
 
+    // Early exit for brute-force, which doesn't build an index
+    if (m_params.index_algorithm == IndexAlgorithm::bruteforce) {
+        std::cerr << "Brute-force algorithm does not require an index.";
+        return;
+    }
+
     // Read sequences
     FASTASequenceReader reader(m_params.sequences_path);
     SequenceContainer database(reader);

@@ -18,11 +18,15 @@ IndexAlgorithm stringToIndexAlgorithm(const std::string &algorithm)
     {
         return IndexAlgorithm::hnsw;
     }
+    else if (algorithm == "bruteforce") 
+    {
+        return IndexAlgorithm::bruteforce;
+    }
     else
     {
         std::stringstream ss;
         ss << "Invalid algorithm: " << algorithm;
-        throw Error(ss.str());
+        throw BaseError(ss.str());
     }
 }
 
@@ -84,7 +88,7 @@ CLI::App *AddDumpSubCommand(CLI::App &app, Parameters &params)
     return dump_sc;
 }
 
-Parameters parse_command_line_args(int argc, char **argv)
+Parameters parse_command_line_args(int argc, const char *const *argv)
 {
     CLI::App app{"Sequence indexing and querying using NMSLIB"};
     app.require_subcommand(1);
@@ -105,11 +109,11 @@ Parameters parse_command_line_args(int argc, char **argv)
         std::stringstream ss;
         app.exit(e, ss, ss);
 
-        throw Error(ss.str());
+        throw BaseError(ss.str());
     }
     catch (...)
     {
-        throw Error("An unknown error occurred while parsing command-line options.");
+        throw BaseError("An unknown error occurred while parsing command-line options.");
     }
 
     if (build_sc->parsed())

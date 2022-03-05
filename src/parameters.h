@@ -16,7 +16,8 @@ enum class RunMode
 enum class IndexAlgorithm
 {
     vptree,
-    hnsw
+    hnsw,
+    bruteforce
 };
 
 class Parameters
@@ -47,6 +48,8 @@ constexpr const char *IndexAlgorithmToString(IndexAlgorithm algorithm) throw()
         return "vantage point tree";
     case IndexAlgorithm::hnsw:
         return "HNSW";
+    case IndexAlgorithm::bruteforce:
+        return "Bruteforce";
     default:
         throw std::invalid_argument("Invalid algorithm");
     }

@@ -4,10 +4,10 @@
 #include <exception>
 #include <string>
 
-class Error : std::exception
+class BaseError : public std::exception
 {
 public:
-    Error(std::string message) : m_message(message) {}
+    BaseError(std::string message) : m_message(message) {}
     const char *what() const throw ()
     {
         return m_message.c_str();

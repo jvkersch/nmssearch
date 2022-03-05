@@ -9,33 +9,30 @@
 
 int main(int argc, char *argv[])
 {
-    Parameters params;
-
     try
     {
+        Parameters params;
         params = parse_command_line_args(argc, argv);
-    }
-    catch (ExitError &e)
-    {
-        std::cerr << e.what();
-        return e.exitcode();
-    }
-
-    std::cerr << "Algorithm: " << IndexAlgorithmToString(params.index_algorithm) << std::endl;
-
-    switch (params.mode)
-    {
-    case RunMode::build:
-        BuildIndexCommand(params).run();
-        break;
-    case RunMode::query:
-        QueryIndexCommand(params).run();
-        break;
-    case RunMode::dump:
-        DumpIndexCommand(params).run();
-    default:
-        break;
-        // do nothing
+  
+        std::cerr << "Algorithm: " << IndexAlgorithmToString(params.index_algorithm) << std::endl;
+   
+        switch (params.mode)
+        {
+        case RunMode::build:
+            BuildIndexCommand(params).run();
+            break;
+        case RunMode::query:
+            QueryIndexCommand(params).run();
+            break;
+        case RunMode::dump:
+            DumpIndexCommand(params).run();
+        default:
+            break;
+            // do nothing
+        }
+    } catch (const std::exception &e) {
+        std::cerr << e.what() << std::endl;
+        return -1;
     }
 
     return 0;

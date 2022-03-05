@@ -4,22 +4,17 @@
 #include <exception>
 #include <string>
 
-class ExitError : std::exception
+class Error : std::exception
 {
 public:
-    ExitError(std::string message, int exitcode) : _message(message), _exitcode(exitcode) {}
+    Error(std::string message) : m_message(message) {}
     const char *what() const throw ()
     {
-        return _message.c_str();
-    }
-    int exitcode() const
-    {
-        return _exitcode;
+        return m_message.c_str();
     }
 
 private:
-    std::string _message;
-    int _exitcode;
+    std::string m_message;
 };
 
 #endif // _ERRORS_H_

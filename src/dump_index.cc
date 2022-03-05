@@ -37,7 +37,7 @@ std::vector<LightWeightNode> readNodeData(fs::path fileName)
     similarity::readBinaryPOD(input, optimIndexFlag);
     if (optimIndexFlag != 0)
     {
-        throw ExitError("Can only dump unoptimized indices.");
+        throw Error("Can only dump unoptimized indices.");
     }
 
     unsigned int totalElementsStored_;
@@ -125,7 +125,7 @@ void DumpIndexCommand::run() const
     std::cerr << "Dumping database " << m_params.database_path << std::endl;
     if (m_params.index_algorithm != IndexAlgorithm::hnsw)
     {
-        throw ExitError("Can only dump index of type HNSW");
+        throw Error("Can only dump index of type HNSW");
     }
 
     fs::path index_bin = m_params.database_path / "index.bin";

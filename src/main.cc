@@ -15,7 +15,7 @@ int main(int argc, char *argv[])
     {
         params = parse_command_line_args(argc, argv);
     }
-    catch (ExitError &e)
+    catch (Error &e)
     {
         std::cerr << e.what();
         return -1;

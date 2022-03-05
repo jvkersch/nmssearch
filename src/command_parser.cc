@@ -22,7 +22,7 @@ IndexAlgorithm stringToIndexAlgorithm(const std::string &algorithm)
     {
         std::stringstream ss;
         ss << "Invalid algorithm: " << algorithm;
-        throw ExitError(ss.str());
+        throw Error(ss.str());
     }
 }
 
@@ -105,11 +105,11 @@ Parameters parse_command_line_args(int argc, char **argv)
         std::stringstream ss;
         app.exit(e, ss, ss);
 
-        throw ExitError(ss.str());
+        throw Error(ss.str());
     }
     catch (...)
     {
-        throw ExitError("An unknown error occurred while parsing command-line options.");
+        throw Error("An unknown error occurred while parsing command-line options.");
     }
 
     if (build_sc->parsed())

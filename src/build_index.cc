@@ -47,12 +47,15 @@ void BuildIndexCommand::run() const
     if (m_params.index_algorithm == IndexAlgorithm::hnsw)
     {
         method_name = "hnsw";
+        indexParams.AddChangeParam("M", m_params.M);
+        indexParams.AddChangeParam("efConstruction", m_params.efConstruction);
     }
     else if (m_params.index_algorithm == IndexAlgorithm::vptree)
     {
         method_name = "vptree";
         indexParams = similarity::AnyParams({"bucketSize=1", "selectPivotAttempts=1"});
     }
+    std::cerr << "Parameters: " << indexParams.ToString() << std::endl;
 
     auto index = std::unique_ptr<similarity::Index<int>>(
         similarity::MethodFactoryRegistry<int>::Instance().CreateMethod(

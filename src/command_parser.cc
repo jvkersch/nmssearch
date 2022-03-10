@@ -46,6 +46,16 @@ void AddToplevelArguments(CLI::App &app, Parameters &params)
         params.instrumentation,
         "Whether to log calls to distance function"
     );
+    app.add_option(
+        "--M",
+        params.M,
+        "Number of bidirectional links (for HNSW)"
+    );
+    app.add_option(
+        "--efConstruction",
+        params.efConstruction,
+        "Size of dynamic neighbor lists (during construction) (for HNSW)"
+    );
 }
 
 CLI::App *AddBuildSubCommand(CLI::App &app, Parameters &params)
@@ -129,6 +139,6 @@ Parameters parse_command_line_args(int argc, const char *const *argv)
     {
         p.mode = RunMode::dump;
     }
-
+ 
     return p;
 }

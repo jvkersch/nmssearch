@@ -36,8 +36,13 @@ public:
     fs::path database_path;
     // The path to the query file. Only used in query mode.
     fs::path query_path;
-    // The number of query results to return. Only used in query mode.
+
+    // Number of query results to return. Only used in query mode.
     int k = 4;
+    // Number of bidirectional links (see HNSW documentation).
+    int M = 16;  
+    // Size of neighbor lists during construction (see HNSW documentation).
+    int efConstruction = 200;
 };
 
 constexpr const char *IndexAlgorithmToString(IndexAlgorithm algorithm) throw()

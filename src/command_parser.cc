@@ -47,6 +47,13 @@ void AddToplevelArguments(CLI::App &app, Parameters &params)
         "Whether to log calls to distance function"
     );
     app.add_option(
+        "-j",
+        params.indexThreadQty,
+        "Number of threads to use"
+    );
+
+    // HNSW parameters
+    app.add_option(
         "--M",
         params.M,
         "Number of bidirectional links (for HNSW)"

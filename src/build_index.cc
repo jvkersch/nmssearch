@@ -44,6 +44,8 @@ void BuildIndexCommand::run() const
     similarity::AnyParams indexParams;
     std::string method_name;
 
+    indexParams.AddChangeParam("indexThreadQty", m_params.indexThreadQty);
+
     if (m_params.index_algorithm == IndexAlgorithm::hnsw)
     {
         method_name = "hnsw";

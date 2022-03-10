@@ -29,6 +29,8 @@ public:
     IndexAlgorithm index_algorithm;
     // Whether to run with instrumentation, i.e. logging all calls to distance function.
     bool instrumentation;
+    // Number of threads to use
+    int indexThreadQty = 4;
 
     // The path to the sequence file to index. Only used in building mode.
     fs::path sequences_path;

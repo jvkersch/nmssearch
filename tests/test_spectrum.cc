@@ -1,4 +1,5 @@
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/catch_approx.hpp>
 
 #include "spectrum.h"
 
@@ -22,5 +23,12 @@ TEST_CASE("kmer spectrum", "[spectrum]") {
         REQUIRE(map["TT"] == 1);
         REQUIRE(map["TG"] == 1);
         REQUIRE(map["GG"] == 2);
+    }
+
+    SECTION("can compute the norm (l2) of a spectrum") {
+        const std::string sequence = "AAATTGGG"; // AA: 2, AT: 1, TT: 1, TG: 1, GG: 2
+        Spectrum spec(sequence, 2);
+
+        REQUIRE(spec.norm() == Catch::Approx(3.3166247903554)); // sqrt(11)
     }
 }  

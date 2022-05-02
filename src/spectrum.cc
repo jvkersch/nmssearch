@@ -1,3 +1,5 @@
+#include <cmath>
+#include <numeric>
 #include <string>
 #include <vector>
 #include <iostream>
@@ -96,6 +98,17 @@ Spectrum::Spectrum(const std::string &sequence, int k) : m_k(k)
 int Spectrum::size() const
 {
     return m_unique.size();
+}
+
+double Spectrum::norm() const
+{
+    if (m_norm < 0) {
+        m_norm = std::accumulate(m_counts.begin(), m_counts.end(), 0.0, [](double sum, double count) {
+            return sum + count*count;
+        });
+        m_norm = sqrt(m_norm);
+    }
+    return m_norm;
 }
 
 std::map<std::string, size_t> Spectrum::to_map() const

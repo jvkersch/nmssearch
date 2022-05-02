@@ -56,7 +56,18 @@ auto count_seq(const std::string &seq, int k)
     return kmers;
 }
 
-Spectrum::Spectrum(const std::string &sequence, int k)
+std::string expand_kmer(uint64_t kmer, int k)
+{
+    std::vector<char> seq;
+    for (int i = 0; i < k; ++i)
+    {
+        seq.push_back("ACGT"[kmer & 3]);
+        kmer >>= 2;
+    }
+    return std::string(seq.rbegin(), seq.rend());
+}
+
+Spectrum::Spectrum(const std::string &sequence, int k) : m_k(k)
 {
     auto kmers = count_seq(sequence, k);
 
@@ -64,19 +75,19 @@ Spectrum::Spectrum(const std::string &sequence, int k)
     {
         std::sort(kmers.begin(), kmers.end());
 
-        unique.push_back(kmers[0]);
-        counts.push_back(1);
+        m_unique.push_back(kmers[0]);
+        m_counts.push_back(1);
 
         for (size_t i = 1; i < kmers.size(); i++)
         {
-            if (kmers[i] == unique.back())
+            if (kmers[i] == m_unique.back())
             {
-                counts.back() += 1;
+                m_counts.back() += 1;
             }
             else
             {
-                unique.push_back(kmers[i]);
-                counts.push_back(1);
+                m_unique.push_back(kmers[i]);
+                m_counts.push_back(1);
             }
         }
     }
@@ -84,5 +95,15 @@ Spectrum::Spectrum(const std::string &sequence, int k)
 
 int Spectrum::size() const
 {
-    return unique.size();
+    return m_unique.size();
+}
+
+std::map<std::string, size_t> Spectrum::to_map() const
+{
+    std::map<std::string, size_t> map;
+    for (size_t i = 0; i < m_unique.size(); i++)
+    {
+        map[expand_kmer(m_unique[i], m_k)] = m_counts[i];
+    }
+    return map;
 }

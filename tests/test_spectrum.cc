@@ -31,4 +31,12 @@ TEST_CASE("kmer spectrum", "[spectrum]") {
 
         REQUIRE(spec.norm() == Catch::Approx(3.3166247903554)); // sqrt(11)
     }
+
+    SECTION("can compute cosine distance for simple sequences", "[spectrum]") {
+        Spectrum s1("AAAA", 2);   // AA: 3
+        Spectrum s2("AAAGG", 2); // AA: 2, AG: 1, GG: 1
+
+        // Expected cosine distance: 1 - 3*2/3/sqrt(6) = 1 - sqrt(2/3) = 0.1835034191
+        REQUIRE(cosine_distance(s1, s2) == Catch::Approx(0.1835034191));
+    }
 }  

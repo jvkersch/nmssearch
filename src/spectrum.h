@@ -15,6 +15,8 @@ public:
     // Convert spectrum to map of actual kmers and counts.
     std::map<std::string, size_t> to_map() const;
     
+    friend double cosine_distance(const Spectrum& s1, const Spectrum& s2);
+
 private:
     int m_k;
     mutable double m_norm = -1;

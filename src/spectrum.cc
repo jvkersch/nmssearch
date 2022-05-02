@@ -120,3 +120,17 @@ std::map<std::string, size_t> Spectrum::to_map() const
     }
     return map;
 }
+
+double cosine_distance(const Spectrum& s1, const Spectrum& s2) {
+    int product;
+    for (size_t i = 0, j = 0; i < s1.size(); i++) {
+        while (j < s2.size() && s2.m_unique[j] < s1.m_unique[i]) {
+            j++;
+        }
+        if (j < s2.size() && s2.m_unique[j] == s1.m_unique[i]) {
+            product += s1.m_counts[i] * s2.m_counts[j];
+        }
+    }
+
+    return 1 - product / s1.norm() / s2.norm();
+}

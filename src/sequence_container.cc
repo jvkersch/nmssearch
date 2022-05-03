@@ -9,6 +9,8 @@ void CollectSequencesAndNames_(FASTASequenceReader &reader,
     while ((seq = reader.next()) != FASTASequenceReader::UNK)
     {
         auto s = seq.sequence;
+        // FIXME: This is a bit dodgy: s goes out of scope, but s.c_str() happens to point
+        // to the same memory as the underlying data from Parasail, so things happen to work.
         similarity::Object *item = new similarity::Object(i++, -1, s.size(), s.c_str());
         dataset.push_back(item);
         names.push_back(seq.name);

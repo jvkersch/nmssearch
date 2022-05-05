@@ -20,7 +20,8 @@ add_library(libnmssearch STATIC
     src/nw_align.cc 
     src/sequence_reader.cc 
     src/query_index.cc 
-    src/sequence_container.cc 
+    src/sequence_container.cc
+    src/spectrum.cc 
     src/output_writer.cc)
 set_target_properties(libnmssearch PROPERTIES OUTPUT_NAME "nmssearch")
 
@@ -49,7 +50,8 @@ add_subdirectory("external/Catch2")
 
 add_executable(test_nmssearch 
    tests/test_output_writer.cc
-   tests/test_parameter_handling.cc)
+   tests/test_parameter_handling.cc
+   tests/test_spectrum.cc)
 target_include_directories(test_nmssearch PRIVATE "${PROJECT_SOURCE_DIR}/src")
 target_link_libraries(test_nmssearch PRIVATE libnmssearch)
 target_link_libraries(test_nmssearch PRIVATE Catch2::Catch2WithMain)

@@ -51,7 +51,8 @@ add_subdirectory("external/Catch2")
 add_executable(test_nmssearch 
    tests/test_output_writer.cc
    tests/test_parameter_handling.cc
-   tests/test_spectrum.cc)
+   tests/test_spectrum.cc
+   tests/test_spectrum_loader.cc)
 target_include_directories(test_nmssearch PRIVATE "${PROJECT_SOURCE_DIR}/src")
 target_link_libraries(test_nmssearch PRIVATE libnmssearch)
 target_link_libraries(test_nmssearch PRIVATE Catch2::Catch2WithMain)

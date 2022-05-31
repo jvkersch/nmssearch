@@ -1,12 +1,16 @@
 #ifndef _SPECTRUM_H_
 #define _SPECTRUM_H_
 
+#include <cereal/archives/binary.hpp>
+#include <cereal/types/vector.hpp>
+
 #include <vector>
 #include <map>
 #include <string>
 
 class Spectrum {
 public:
+    Spectrum() {};
     Spectrum(const std::string& sequence, int k);
     
     int size() const;
@@ -19,6 +23,12 @@ public:
     std::map<std::string, size_t> to_map() const;
     
     friend double cosine_distance(const Spectrum& s1, const Spectrum& s2);
+
+    // Serialization/deserialization support
+    template <class Archive>
+    void serialize(Archive& ar) {
+        ar(m_k, m_unique, m_counts);
+    }
 
 private:
     int m_k;

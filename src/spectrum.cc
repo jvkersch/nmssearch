@@ -112,6 +112,16 @@ double Spectrum::norm() const
     return m_norm;
 }
 
+bool Spectrum::operator==(const Spectrum& other) const 
+{
+    return (m_k == other.m_k) && (m_unique == other.m_unique) && (m_counts == other.m_counts);
+}
+
+bool Spectrum::operator!=(const Spectrum& other) const
+{
+    return !(*this == other);
+}
+
 std::map<std::string, size_t> Spectrum::to_map() const
 {
     std::map<std::string, size_t> map;

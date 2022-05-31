@@ -39,4 +39,13 @@ TEST_CASE("kmer spectrum", "[spectrum]") {
         // Expected cosine distance: 1 - 3*2/3/sqrt(6) = 1 - sqrt(2/3) = 0.1835034191
         REQUIRE(cosine_distance(s1, s2) == Catch::Approx(0.1835034191));
     }
+
+    SECTION("equal spectra compare equally", "[spectrum]") {
+        Spectrum s1("AAAA", 2);   // AA: 3
+        Spectrum s2("AAAA", 2);   // AA: 3
+        Spectrum s3("AAAAG", 2); // AA: 3, AG: 1
+
+        REQUIRE(s1 == s2);
+        REQUIRE(s1 != s3);
+    }
 }  

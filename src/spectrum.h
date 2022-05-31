@@ -12,6 +12,9 @@ public:
     int size() const;
     double norm() const;
 
+    bool operator==(const Spectrum& other) const;
+    bool operator!=(const Spectrum& other) const;
+
     // Convert spectrum to map of actual kmers and counts.
     std::map<std::string, size_t> to_map() const;
     

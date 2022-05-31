@@ -8,7 +8,7 @@
 
 
 // Create a temporary file with the given contents. Caller needs to unlink the file.
-std::string CreateTempFile(const std::string &contents) {
+inline std::string CreateTempFile(const std::string &contents) {
     char temp_filename[] = "/tmp/nms_temp_file.XXXXXX";
     int fd = mkstemp(temp_filename);
     if (fd == -1) {
@@ -24,7 +24,7 @@ std::string CreateTempFile(const std::string &contents) {
 }
 
 // Unlink the given temporary file.
-void RemoveTempFile(const std::string &filename) {
+inline void RemoveTempFile(const std::string &filename) {
     std::remove(filename.c_str());
 }
 

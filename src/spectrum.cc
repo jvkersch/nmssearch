@@ -122,6 +122,17 @@ bool Spectrum::operator!=(const Spectrum& other) const
     return !(*this == other);
 }
 
+std::ostream& operator<<(std::ostream& os, const Spectrum& s) 
+{
+    auto kmermap = s.to_map();
+    os << '[';
+    for (const auto& it: kmermap) {
+        os << it.first << "=" << it.second << " ";
+    }
+    os << ']';
+    return os;
+}
+
 std::map<std::string, size_t> Spectrum::to_map() const
 {
     std::map<std::string, size_t> map;

@@ -4,9 +4,10 @@
 #include <cereal/archives/binary.hpp>
 #include <cereal/types/vector.hpp>
 
-#include <vector>
+#include <ostream>
 #include <map>
 #include <string>
+#include <vector>
 
 class Spectrum {
 public:
@@ -18,6 +19,8 @@ public:
 
     bool operator==(const Spectrum& other) const;
     bool operator!=(const Spectrum& other) const;
+
+    friend std::ostream& operator<<(std::ostream& os, const Spectrum& s);
 
     // Convert spectrum to map of actual kmers and counts.
     std::map<std::string, size_t> to_map() const;

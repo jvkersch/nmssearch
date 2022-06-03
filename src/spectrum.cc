@@ -144,7 +144,7 @@ std::map<std::string, size_t> Spectrum::to_map() const
 }
 
 double cosine_distance(const Spectrum& s1, const Spectrum& s2) {
-    int product;
+    int product = 0;
     for (size_t i = 0, j = 0; i < s1.size(); i++) {
         while (j < s2.size() && s2.m_unique[j] < s1.m_unique[i]) {
             j++;

@@ -52,6 +52,7 @@ target_link_libraries(nmssearch PRIVATE libnmssearch)
 add_subdirectory("external/Catch2")
 
 add_executable(test_nmssearch 
+   tests/test_kmer_space.cc
    tests/test_output_writer.cc
    tests/test_parameter_handling.cc
    tests/test_spectrum.cc
@@ -59,5 +60,6 @@ add_executable(test_nmssearch
    tests/test_spectrum_loader.cc)
 target_include_directories(test_nmssearch PRIVATE "${PROJECT_SOURCE_DIR}/src")
 target_include_directories(test_nmssearch PRIVATE "${PROJECT_SOURCE_DIR}/external/cereal/include")
+target_include_directories(test_nmssearch PRIVATE "${PROJECT_SOURCE_DIR}/external/nmslib/similarity_search/include")
 target_link_libraries(test_nmssearch PRIVATE libnmssearch)
 target_link_libraries(test_nmssearch PRIVATE Catch2::Catch2WithMain)

@@ -8,7 +8,7 @@
 TEST_CASE( "Serialize/deserialize spectrum", "[io]" ) {
     // Given
     const std::string sequence = "AAATTGGG";
-    Spectrum spec(sequence, 2);
+    Spectrum spec("seq", sequence, 2);
 
     // When
     serialize(spec, "spectrum.bin");
@@ -23,8 +23,8 @@ TEST_CASE( "Serialize/deserialize spectrum", "[io]" ) {
 TEST_CASE( "Serialize/deserialize multiple spectrums", "[io]" ) {
     // Given
     const std::string sequence = "AAATTGGG";
-    Spectrum spec1(sequence, 2);
-    Spectrum spec2(sequence, 3);
+    Spectrum spec1("s1", sequence, 2);
+    Spectrum spec2("s2", sequence, 3);
     std::vector<Spectrum> spectra = {spec1, spec2};
 
     // When

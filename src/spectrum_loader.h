@@ -19,7 +19,7 @@ inline std::vector<Spectrum> LoadSpectraFromFile(std::string filename, size_t k)
         parasail_sequence_t seq = sequences->seqs[i];
         std::string sequence(seq.seq.s, seq.seq.l);
         std::string name(seq.name.s, seq.name.l);
-        spectra.push_back(Spectrum(sequence, k)); // TODO: Should we use the name?
+        spectra.push_back(Spectrum(name, sequence, k));
     }
  
     parasail_sequences_free(sequences);

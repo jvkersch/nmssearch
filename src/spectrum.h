@@ -2,6 +2,7 @@
 #define _SPECTRUM_H_
 
 #include <cereal/archives/binary.hpp>
+#include <cereal/types/string.hpp>
 #include <cereal/types/vector.hpp>
 
 #include <ostream>
@@ -12,7 +13,6 @@
 class Spectrum {
 public:
     Spectrum() {};
-    Spectrum(const std::string& sequence, int k);
     Spectrum(const std::string& name, const std::string& sequence, int k);
     
     int size() const;
@@ -33,7 +33,7 @@ public:
     // Serialization/deserialization support
     template <class Archive>
     void serialize(Archive& ar) {
-        ar(m_k, m_unique, m_counts);
+        ar(m_name, m_k, m_unique, m_counts);
     }
 
 private:

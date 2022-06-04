@@ -70,15 +70,9 @@ std::string expand_kmer(uint64_t kmer, int k)
     return std::string(seq.rbegin(), seq.rend());
 }
 
-Spectrum::Spectrum(const std::string& name, const std::string& seq, int k) : 
-    Spectrum(seq, k)
+Spectrum::Spectrum(const std::string& name, const std::string& seq, int k) : m_name(name), m_k(k)
 {
-    m_name = name;
-}
-
-Spectrum::Spectrum(const std::string &sequence, int k) : m_k(k)
-{
-    auto kmers = count_seq(sequence, k);
+    auto kmers = count_seq(seq, k);
 
     if (!kmers.empty())
     {
@@ -125,7 +119,10 @@ double Spectrum::norm() const
 
 bool Spectrum::operator==(const Spectrum& other) const 
 {
-    return (m_k == other.m_k) && (m_unique == other.m_unique) && (m_counts == other.m_counts);
+    return ((m_name == other.m_name) && 
+            (m_k == other.m_k) &&
+            (m_unique == other.m_unique) &&
+            (m_counts == other.m_counts));
 }
 
 bool Spectrum::operator!=(const Spectrum& other) const
@@ -135,12 +132,19 @@ bool Spectrum::operator!=(const Spectrum& other) const
 
 std::ostream& operator<<(std::ostream& os, const Spectrum& s) 
 {
+    os << "Spectrum(name='" << s.m_name << "', "
+       << "k=" << s.m_k << ", "
+       << "data=[";
+
     auto kmermap = s.to_map();
-    os << '[';
+    size_t i = 0;
     for (const auto& it: kmermap) {
-        os << it.first << "=" << it.second << " ";
+        os << it.first << "=" << it.second;
+        if (i++ < kmermap.size() - 1) {
+            os << ", ";
+        }
     }
-    os << ']';
+    os << "])";
     return os;
 }
 

@@ -16,8 +16,8 @@ public:
 
 TEST_CASE("", "[kmer]" ) {
     std::vector<Spectrum> spectra = {
-        Spectrum("AAAA", 2),
-        Spectrum("AAAGGG", 2)
+        Spectrum("", "AAAA", 2),
+        Spectrum("", "AAAGGG", 2)
     };
     similarity::Object obj1(0, 0, 0, nullptr);
     similarity::Object obj2(1, 0, 0, nullptr);

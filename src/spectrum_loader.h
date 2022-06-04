@@ -8,7 +8,7 @@
 #include "parasail/io.h"
 
 
-std::vector<Spectrum> LoadSpectraFromFile(std::string filename, size_t k)
+inline std::vector<Spectrum> LoadSpectraFromFile(std::string filename, size_t k)
 {
     auto sequences = parasail_sequences_from_file(filename.c_str());
     assert(sequences != nullptr);  // TODO: Proper error handling

@@ -13,9 +13,12 @@ class Spectrum {
 public:
     Spectrum() {};
     Spectrum(const std::string& sequence, int k);
+    Spectrum(const std::string& name, const std::string& sequence, int k);
     
     int size() const;
     double norm() const;
+
+    std::string name() const;
 
     bool operator==(const Spectrum& other) const;
     bool operator!=(const Spectrum& other) const;
@@ -34,6 +37,7 @@ public:
     }
 
 private:
+    std::string m_name;
     int m_k;
     mutable double m_norm = -1;
 

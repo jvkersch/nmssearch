@@ -5,6 +5,11 @@
 
 
 TEST_CASE("kmer spectrum", "[spectrum]") {
+    SECTION("can initalize a spectrum with a name") {
+        Spectrum spec("foo", "AAAA", 2);
+        REQUIRE(spec.name() == "foo");
+    }
+
     SECTION("can build kmer spectrum from sequences") {
         const std::string sequence = "AAATTGGG";
         Spectrum spec(sequence, 2);

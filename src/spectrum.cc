@@ -70,6 +70,12 @@ std::string expand_kmer(uint64_t kmer, int k)
     return std::string(seq.rbegin(), seq.rend());
 }
 
+Spectrum::Spectrum(const std::string& name, const std::string& seq, int k) : 
+    Spectrum(seq, k)
+{
+    m_name = name;
+}
+
 Spectrum::Spectrum(const std::string &sequence, int k) : m_k(k)
 {
     auto kmers = count_seq(sequence, k);
@@ -99,6 +105,11 @@ Spectrum::Spectrum(const std::string &sequence, int k) : m_k(k)
 int Spectrum::size() const
 {
     return m_unique.size();
+}
+
+std::string Spectrum::name() const
+{
+    return m_name;
 }
 
 double Spectrum::norm() const

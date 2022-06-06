@@ -27,7 +27,7 @@ public:
 class FASTASequenceReader
 {
 public:
-    FASTASequenceReader();
+    FASTASequenceReader() {}
     FASTASequenceReader(const std::string &filename);
     ~FASTASequenceReader();
 
@@ -36,7 +36,7 @@ public:
     static const FASTASequence UNK;
 
 private:
-    parasail_sequences_t *m_sequences;
+    parasail_sequences_t *m_sequences = nullptr;
     size_t m_i;
 };
 

@@ -2,7 +2,8 @@
 
 const FASTASequence FASTASequenceReader::UNK{"unk", "unk"};
 
-FASTASequenceReader::FASTASequenceReader(const std::string &filename) : m_sequences(nullptr), m_i(0)
+
+FASTASequenceReader::FASTASequenceReader(const std::string &filename)
 {
     m_sequences = parasail_sequences_from_file(filename.c_str());
 }

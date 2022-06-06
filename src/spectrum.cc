@@ -70,9 +70,9 @@ std::string expand_kmer(uint64_t kmer, int k)
     return std::string(seq.rbegin(), seq.rend());
 }
 
-Spectrum::Spectrum(const std::string &sequence, int k) : m_k(k)
+Spectrum::Spectrum(const std::string& name, const std::string& seq, int k) : m_name(name), m_k(k)
 {
-    auto kmers = count_seq(sequence, k);
+    auto kmers = count_seq(seq, k);
 
     if (!kmers.empty())
     {
@@ -101,6 +101,11 @@ int Spectrum::size() const
     return m_unique.size();
 }
 
+std::string Spectrum::name() const
+{
+    return m_name;
+}
+
 double Spectrum::norm() const
 {
     if (m_norm < 0) {
@@ -110,6 +115,37 @@ double Spectrum::norm() const
         m_norm = sqrt(m_norm);
     }
     return m_norm;
+}
+
+bool Spectrum::operator==(const Spectrum& other) const 
+{
+    return ((m_name == other.m_name) && 
+            (m_k == other.m_k) &&
+            (m_unique == other.m_unique) &&
+            (m_counts == other.m_counts));
+}
+
+bool Spectrum::operator!=(const Spectrum& other) const
+{
+    return !(*this == other);
+}
+
+std::ostream& operator<<(std::ostream& os, const Spectrum& s) 
+{
+    os << "Spectrum(name='" << s.m_name << "', "
+       << "k=" << s.m_k << ", "
+       << "data=[";
+
+    auto kmermap = s.to_map();
+    size_t i = 0;
+    for (const auto& it: kmermap) {
+        os << it.first << "=" << it.second;
+        if (i++ < kmermap.size() - 1) {
+            os << ", ";
+        }
+    }
+    os << "])";
+    return os;
 }
 
 std::map<std::string, size_t> Spectrum::to_map() const
@@ -123,7 +159,7 @@ std::map<std::string, size_t> Spectrum::to_map() const
 }
 
 double cosine_distance(const Spectrum& s1, const Spectrum& s2) {
-    int product;
+    int product = 0;
     for (size_t i = 0, j = 0; i < s1.size(); i++) {
         while (j < s2.size() && s2.m_unique[j] < s1.m_unique[i]) {
             j++;

@@ -100,11 +100,13 @@ void writeNode(const LightWeightNode &node)
     std::cout << "    \"id\": " << node.id << "," << std::endl;
     std::cout << "    \"level\": " << node.level << "," << std::endl;
     std::cout << "    \"friends\": [";
-    for (int i = 0; i < node.friends.size() - 1; i++)
-    {
-        std::cout << node.friends[i] << ", ";
+    if (!node.friends.empty()) {
+        for (int i = 0; i < node.friends.size() - 1; i++) {
+            std::cout << node.friends[i] << ", ";
+        }
+        std::cout << node.friends.back();
     }
-    std::cout << node.friends.back() << "]" << std::endl;
+    std::cout << "]" << std::endl;
     std::cout << "  }";
 }
 

@@ -37,7 +37,7 @@ public:
 
 private:
     parasail_sequences_t *m_sequences = nullptr;
-    size_t m_i;
+    size_t m_i = 0;
 };
 
 #endif // _SEQUENCE_READER_H_

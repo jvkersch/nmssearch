@@ -111,8 +111,6 @@ void QueryIndexCommand::run() const {
       LoadSpectraFromFile(m_params.query_path, 7); // Make k configurable
   auto query_indices = CreateDataset(query_spectra.size(), spectra.size());
 
-  std::cout << "query: " << query_spectra[0].name() << std::endl;
-
   std::vector<Spectrum> combined;
   combined.reserve(spectra.size() + query_spectra.size());
   combined.insert(combined.end(), spectra.begin(), spectra.end());

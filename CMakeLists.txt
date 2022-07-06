@@ -43,6 +43,9 @@ target_link_libraries(libnmssearch PRIVATE Threads::Threads)
 if (UNIX)
     find_package(ZLIB)
     target_link_libraries(libnmssearch PUBLIC ZLIB::ZLIB)
+
+    # necessary for g++-8
+    target_link_libraries(libnmssearch PRIVATE stdc++fs)
 endif()
 
 # Main executable

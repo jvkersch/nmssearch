@@ -3,14 +3,13 @@
 
 #include "parameters.h"
 
-class QueryIndexCommand
-{
+class QueryIndexCommand {
 public:
-    QueryIndexCommand(const Parameters &params) : m_params(params) {}
-    void run() const;
+  QueryIndexCommand(const Parameters &params) : m_params(params) {}
+  void run() const;
 
 private:
-    const Parameters &m_params;
+  const Parameters &m_params;
 };
 
 #endif // _QUERY_INDEX_H_

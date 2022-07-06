@@ -119,10 +119,6 @@ void QueryIndexCommand::run() const {
   combined.insert(combined.end(), query_spectra.begin(), query_spectra.end());
   KMerSpace space(&combined);
 
-  for (const auto& s : combined) {
-    std::cout << "item: " << s.name() << " " << s.norm() << std::endl;
-  }
-
   std::cerr << "Loaded " << query_spectra.size() << " query sequence(s)."
             << std::endl;
 

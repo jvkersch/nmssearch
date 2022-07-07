@@ -10,6 +10,7 @@ namespace fs = std::filesystem;
 
 IndexAlgorithm stringToIndexAlgorithm(const std::string &algorithm)
 {
+    // FIXME: This is starting to get problematic.
     if (algorithm == "vptree")
     {
         return IndexAlgorithm::vptree;
@@ -21,6 +22,14 @@ IndexAlgorithm stringToIndexAlgorithm(const std::string &algorithm)
     else if (algorithm == "bruteforce") 
     {
         return IndexAlgorithm::bruteforce;
+    }
+    else if (algorithm == "hnsw-kmer")
+    {
+        return IndexAlgorithm::hnsw_kmer;
+    }
+    else if (algorithm == "bruteforce-kmer")
+    {
+        return IndexAlgorithm::bruteforce_kmer;
     }
     else
     {

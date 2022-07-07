@@ -45,7 +45,7 @@ if (UNIX)
     target_link_libraries(libnmssearch PUBLIC ZLIB::ZLIB)
 
     # necessary for g++-8
-    target_link_libraries(libnmssearch PRIVATE stdc++fs)
+    #target_link_libraries(libnmssearch PRIVATE stdc++fs)
 endif()
 
 # Main executable
@@ -55,7 +55,8 @@ target_link_libraries(nmssearch PRIVATE libnmssearch)
 # Unit tests
 add_subdirectory("external/Catch2")
 
-add_executable(test_nmssearch 
+add_executable(test_nmssearch
+   tests/test_command_parser.cc 
    tests/test_kmer_space.cc
    tests/test_output_writer.cc
    tests/test_parameter_handling.cc

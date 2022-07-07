@@ -17,7 +17,9 @@ enum class IndexAlgorithm
 {
     vptree,
     hnsw,
-    bruteforce
+    bruteforce,
+    hnsw_kmer,
+    bruteforce_kmer
 };
 
 class Parameters

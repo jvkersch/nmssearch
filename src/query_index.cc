@@ -140,7 +140,9 @@ void QueryIndexCommand::run() const {
       similarity::MethodFactoryRegistry<float>::Instance().CreateMethod(
           true, method_name, "custom", space, indices));
 
-  if (m_params.index_algorithm != IndexAlgorithm::bruteforce) {
+  if (m_params.index_algorithm == IndexAlgorithm::bruteforce) {
+    index->CreateIndex(queryParams);
+  } else {
     index->LoadIndex(m_params.database_path / "index.bin");
   }
 

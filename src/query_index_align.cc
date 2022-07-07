@@ -13,7 +13,7 @@
 
 // local
 #include "alignment_space.h"
-#include "query_index.h"
+#include "query_index_align.h"
 #include "nw_align.h"
 #include "output_writer.h"
 #include "sequence_container.h"
@@ -47,7 +47,7 @@ std::vector<AlignStats> PrepareQueryResults(
     return query_results;
 }
 
-void QueryIndexCommand::run() const
+void AlignQueryIndexCommand::run() const
 {
     NeedlemanWunschAligner aligner;
     AlignmentSpace<NeedlemanWunschAligner> nwspace(aligner);

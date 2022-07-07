@@ -4,7 +4,7 @@
 #include "command_parser.h"
 #include "dump_index.h"
 #include "parameters.h"
-#include "query_index.h"
+#include "query_index_align.h"
 #include "errors.h"
 
 int main(int argc, char *argv[])
@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
             BuildIndexCommand(params).run();
             break;
         case RunMode::query:
-            QueryIndexCommand(params).run();
+            AlignQueryIndexCommand(params).run();
             break;
         case RunMode::dump:
             DumpIndexCommand(params).run();

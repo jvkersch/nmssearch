@@ -20,7 +20,7 @@ add_library(libnmssearch STATIC
     src/kmer_space.cc
     src/nw_align.cc 
     src/sequence_reader.cc 
-    src/query_index.cc 
+    src/query_index_align.cc 
     src/sequence_container.cc
     src/spectrum.cc 
     src/spectrum_io.cc

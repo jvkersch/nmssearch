@@ -49,7 +49,7 @@ public:
     int efConstruction = 200;
 };
 
-constexpr const char *IndexAlgorithmToString(IndexAlgorithm algorithm) throw()
+constexpr const char *IndexAlgorithmToString(IndexAlgorithm algorithm)
 {
     switch (algorithm)
     {

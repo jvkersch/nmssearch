@@ -2,15 +2,15 @@
 #define _ALIGN_QUERY_INDEX_H_
 
 #include "parameters.h"
+#include "query_index.h"
 
-class AlignQueryIndexCommand
+
+class AlignQueryIndexCommand: public QueryIndexCommand
 {
 public:
-    AlignQueryIndexCommand(const Parameters &params) : m_params(params) {}
-    void run() const;
+    AlignQueryIndexCommand(const Parameters& params) : QueryIndexCommand(params) {}
 
-private:
-    const Parameters &m_params;
+    void run() const override;
 };
 
 #endif // _ALIGN_QUERY_INDEX_H_

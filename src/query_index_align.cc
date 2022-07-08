@@ -13,9 +13,8 @@
 
 // local
 #include "alignment_space.h"
-#include "query_index.h"
+#include "query_index_align.h"
 #include "nw_align.h"
-#include "output_writer.h"
 #include "sequence_container.h"
 #include "sequence_reader.h"
 
@@ -47,7 +46,7 @@ std::vector<AlignStats> PrepareQueryResults(
     return query_results;
 }
 
-void QueryIndexCommand::run() const
+void AlignQueryIndexCommand::run() const
 {
     NeedlemanWunschAligner aligner;
     AlignmentSpace<NeedlemanWunschAligner> nwspace(aligner);
@@ -95,7 +94,9 @@ void QueryIndexCommand::run() const
             nwspace,
             database.getDataset()));
 
-    if (m_params.index_algorithm != IndexAlgorithm::bruteforce) {
+    if (m_params.index_algorithm == IndexAlgorithm::bruteforce) {
+        index->CreateIndex(queryParams);
+    } else {
         index->LoadIndex(m_params.database_path / "index.bin");
     }
     
@@ -104,15 +105,13 @@ void QueryIndexCommand::run() const
     std::cerr << "Loaded index for " << database.size() << " sequences" << std::endl;
     std::cerr << "Index type " << IndexAlgorithmToString(m_params.index_algorithm) << std::endl;
 
-    OutputWriter writer;
-
     for (auto query : queries.getDataset())
     { // TODO make batch
         similarity::KNNQuery<int> knnquery(nwspace, query, m_params.k);
         index->Search(&knnquery);
 
         auto query_results = PrepareQueryResults(queries[query->id()], knnquery.Result(), database, aligner);
-        writer.display(query_results, std::cout);
+        m_writer.display(query_results, std::cout);
     }
 
     if (m_params.instrumentation) {

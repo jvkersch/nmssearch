@@ -2,15 +2,20 @@
 #define _QUERY_INDEX_H_
 
 #include "parameters.h"
+#include "output_writer.h"
 
-class QueryIndexCommand
-{
+
+class QueryIndexCommand {
 public:
-    QueryIndexCommand(const Parameters &params) : m_params(params) {}
-    void run() const;
+    //QueryIndexCommand(const Parameters &params) : m_params(params) {}
+    QueryIndexCommand(const Parameters &params, const BaseOutputWriter &writer) :
+        m_params(params), m_writer(writer) {}
 
-private:
+    virtual void run() const = 0;
+
+protected:
     const Parameters &m_params;
+    const BaseOutputWriter &m_writer;
 };
 
 #endif // _QUERY_INDEX_H_

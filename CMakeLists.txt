@@ -20,7 +20,7 @@ add_library(libnmssearch STATIC
     src/kmer_space.cc
     src/nw_align.cc 
     src/sequence_reader.cc 
-    src/query_index.cc 
+    src/query_index_align.cc 
     src/sequence_container.cc
     src/spectrum.cc 
     src/spectrum_io.cc
@@ -43,7 +43,9 @@ target_link_libraries(libnmssearch PRIVATE Threads::Threads)
 if (UNIX)
     find_package(ZLIB)
     target_link_libraries(libnmssearch PUBLIC ZLIB::ZLIB)
+endif()
 
+if (UNIX AND NOT APPLE)
     # necessary for g++-8
     target_link_libraries(libnmssearch PRIVATE stdc++fs)
 endif()
@@ -55,10 +57,11 @@ target_link_libraries(nmssearch PRIVATE libnmssearch)
 # Unit tests
 add_subdirectory("external/Catch2")
 
-add_executable(test_nmssearch 
+add_executable(test_nmssearch
    tests/test_kmer_space.cc
    tests/test_output_writer.cc
    tests/test_parameter_handling.cc
+   tests/test_query_index_align.cc 
    tests/test_spectrum.cc
    tests/test_spectrum_io.cc
    tests/test_spectrum_loader.cc)

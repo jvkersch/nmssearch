@@ -7,21 +7,32 @@
 
 #define NELEMS(arr)  (sizeof(arr) / sizeof((arr)[0]))
 
+auto parse_cli_helper(const char *algorithm) {
+    char const *argv[] = {
+        "dummy",
+        "--algorithm",
+        algorithm,
+        "dump",
+        "index.bin"
+    };
+    int argc = NELEMS(argv);
+    return parse_command_line_args(argc, argv);
+}
+
 TEST_CASE( "command-line arguments are handled", "[parameters]" ) {
 
     SECTION("algorithm optional parameter is set") {
 
-        char const *argv[] = {
-            "dummy",
-            "--algorithm",
-            "bruteforce",
-            "dump",
-            "index.bin"
-        };
-        int argc = NELEMS(argv);
-
-        auto params = parse_command_line_args(argc, argv);
+        auto params = parse_cli_helper("bruteforce");
         REQUIRE(params.index_algorithm == IndexAlgorithm::bruteforce);
+        params = parse_cli_helper("hnsw");
+        REQUIRE(params.index_algorithm == IndexAlgorithm::hnsw);
+        params = parse_cli_helper("vptree");
+        REQUIRE(params.index_algorithm == IndexAlgorithm::vptree);
+        params = parse_cli_helper("hnsw-kmer");
+        REQUIRE(params.index_algorithm == IndexAlgorithm::hnsw_kmer);
+        params = parse_cli_helper("bruteforce-kmer");
+        REQUIRE(params.index_algorithm == IndexAlgorithm::bruteforce_kmer);
     }
 
     SECTION("algorithm optional parameter defaults to hnsw") {

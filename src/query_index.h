@@ -8,6 +8,8 @@
 class QueryIndexCommand {
 public:
     QueryIndexCommand(const Parameters &params) : m_params(params) {}
+    QueryIndexCommand(const Parameters &params, const OutputWriter writer) :
+        m_params(params), m_writer(writer) {}
 
     virtual void run() const = 0;
 

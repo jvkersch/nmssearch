@@ -17,9 +17,10 @@ public:
 
     FASTASequence operator[](size_t i) const
     {
-        return FASTASequence(
-            m_names[i],
-            m_sequences[i]->data());
+        auto obj = m_sequences[i];
+
+        std::string seq(obj->data(), obj->datalength() / sizeof(char));
+        return FASTASequence(m_names[i], seq);
     }
 
     const similarity::ObjectVector &getDataset() const

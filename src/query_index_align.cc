@@ -94,7 +94,9 @@ void AlignQueryIndexCommand::run() const
             nwspace,
             database.getDataset()));
 
-    if (m_params.index_algorithm != IndexAlgorithm::bruteforce) {
+    if (m_params.index_algorithm == IndexAlgorithm::bruteforce) {
+        index->CreateIndex(queryParams);
+    } else {
         index->LoadIndex(m_params.database_path / "index.bin");
     }
     

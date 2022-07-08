@@ -17,13 +17,13 @@ int main(int argc, char *argv[])
   
         std::cerr << "Algorithm: " << IndexAlgorithmToString(params.index_algorithm) << std::endl;
    
+        OutputWriter writer;
         switch (params.mode)
         {
         case RunMode::build:
             BuildIndexCommand(params).run();
             break;
         case RunMode::query:
-            OutputWriter writer;
             AlignQueryIndexCommand(params, writer).run();
             break;
         case RunMode::dump:

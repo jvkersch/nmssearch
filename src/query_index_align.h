@@ -9,8 +9,8 @@
 class AlignQueryIndexCommand: public QueryIndexCommand
 {
 public:
-    AlignQueryIndexCommand(const Parameters& params) : QueryIndexCommand(params) {}
-    AlignQueryIndexCommand(const Parameters& params, const OutputWriter writer) : 
+    //AlignQueryIndexCommand(const Parameters& params) : QueryIndexCommand(params) {}
+    AlignQueryIndexCommand(const Parameters& params, const BaseOutputWriter& writer) : 
         QueryIndexCommand(params, writer) {}
 
     void run() const override;

@@ -77,4 +77,25 @@ TEST_CASE("Query the index in align mode", "[query-align]") {
         REQUIRE(writer[1].subjectId == "B");
         REQUIRE(writer[1].pctIdentity == Catch::Approx(83.33).margin(0.01));
     }
+
+    SECTION("vptree") {
+        // Given
+        Parameters params;
+        params.index_algorithm = IndexAlgorithm::hnsw;
+        params.database_path = testing_artifact("hnsw-small.bin");
+        params.query_path = testing_artifact("query-small.fa");
+        DummyOutputWriter writer;
+
+        AlignQueryIndexCommand cmd(params, writer);
+
+        // When
+        cmd.run();
+
+        // Then
+        REQUIRE(writer.ncalls() == 2);
+        REQUIRE(writer[0].subjectId == "A");
+        REQUIRE(writer[0].pctIdentity == Catch::Approx(57.14).margin(0.01));
+        REQUIRE(writer[1].subjectId == "B");
+        REQUIRE(writer[1].pctIdentity == Catch::Approx(83.33).margin(0.01));
+    }
 }

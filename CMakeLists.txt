@@ -65,6 +65,9 @@ add_executable(test_nmssearch
    tests/test_spectrum.cc
    tests/test_spectrum_io.cc
    tests/test_spectrum_loader.cc)
+
+target_compile_definitions(test_nmssearch PRIVATE TEST_ARTIFACT_DIRECTORY="${PROJECT_SOURCE_DIR}/tests/data")
+
 target_include_directories(test_nmssearch PRIVATE "${PROJECT_SOURCE_DIR}/src")
 target_include_directories(test_nmssearch PRIVATE "${PROJECT_SOURCE_DIR}/external/cereal/include")
 target_include_directories(test_nmssearch PRIVATE "${PROJECT_SOURCE_DIR}/external/nmslib/similarity_search/include")

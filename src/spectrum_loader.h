@@ -1,6 +1,7 @@
 #ifndef _SPECTRUM_LOADER_H_
 #define _SPECTRUM_LOADER_H_
 
+#include <cassert>
 #include <string>
 #include <vector>
 

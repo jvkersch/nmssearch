@@ -47,6 +47,8 @@ public:
     int M = 16;  
     // Size of neighbor lists during construction (see HNSW documentation).
     int efConstruction = 200;
+    // KMer length for spectral-based methods;
+    int kmer_size = 7;
 };
 
 constexpr const char *IndexAlgorithmToString(IndexAlgorithm algorithm)

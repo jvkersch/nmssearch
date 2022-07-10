@@ -21,6 +21,7 @@ add_library(libnmssearch STATIC
     src/nw_align.cc 
     src/sequence_reader.cc 
     src/query_index_align.cc 
+    src/query_index_spectrum.cc
     src/sequence_container.cc
     src/spectrum.cc 
     src/spectrum_io.cc
@@ -62,6 +63,7 @@ add_executable(test_nmssearch
    tests/test_output_writer.cc
    tests/test_parameter_handling.cc
    tests/test_query_index_align.cc 
+   tests/test_query_index_spectrum.cc
    tests/test_spectrum.cc
    tests/test_spectrum_io.cc
    tests/test_spectrum_loader.cc)

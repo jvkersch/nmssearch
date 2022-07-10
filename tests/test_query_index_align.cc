@@ -78,7 +78,7 @@ TEST_CASE("Query the index in align mode", "[query-align]") {
         REQUIRE(writer[1].pctIdentity == Catch::Approx(83.33).margin(0.01));
     }
 
-    SECTION("vptree") {
+    SECTION("hnsw") {
         // Given
         Parameters params;
         params.index_algorithm = IndexAlgorithm::hnsw;

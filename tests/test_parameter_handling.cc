@@ -47,4 +47,17 @@ TEST_CASE( "command-line arguments are handled", "[parameters]" ) {
         auto params = parse_command_line_args(argc, argv);
         REQUIRE(params.index_algorithm == IndexAlgorithm::hnsw);
     }
+
+    SECTION("kmer length can be specified") {
+        char const *argv[] = {
+            "dummy",
+            "--kmer-length", "12",
+            "dump",
+            "index.bin"
+        };
+        int argc = NELEMS(argv);
+
+        auto params = parse_command_line_args(argc, argv);
+        REQUIRE(params.kmer_length == 12);
+    }
 }

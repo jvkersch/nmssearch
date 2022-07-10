@@ -60,6 +60,11 @@ void AddToplevelArguments(CLI::App &app, Parameters &params)
         params.indexThreadQty,
         "Number of threads to use"
     );
+    app.add_option(
+        "--kmer-length",
+        params.kmer_length,
+        "Kmer length to use for spectral computations"
+    );
 
     // HNSW parameters
     app.add_option(

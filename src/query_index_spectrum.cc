@@ -73,7 +73,7 @@ void SpectrumQueryIndexCommand::run() const {
 
   // Read query sequences
   auto query_spectra =
-      LoadSpectraFromFile(m_params.query_path, m_params.kmer_size);
+      LoadSpectraFromFile(m_params.query_path, m_params.kmer_length);
   auto query_indices = CreateDataset(query_spectra.size(), spectra.size());
 
   std::vector<Spectrum> combined;

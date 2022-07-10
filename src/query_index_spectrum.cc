@@ -51,33 +51,6 @@ PrepareQueryResults(const Spectrum &query,
   return query_results;
 }
 
-// std::vector<AlignStats> PrepareQueryResults(
-//     const FASTASequence &query,
-//     const similarity::KNNQueue<int> *results,
-//     const SequenceContainer &sequences,
-//     const NeedlemanWunschAligner &aligner)
-// {
-//     std::vector<AlignStats> query_results;
-//     std::unique_ptr<similarity::KNNQueue<int>> clone(results->Clone());
-
-//     while (!clone->Empty())
-//     {
-//         auto *result = clone->Pop();
-//         auto target = sequences[result->id()];
-
-//         auto stats = aligner.align_stats(query, target);
-//         query_results.push_back(stats);
-//     }
-
-//     std::sort(std::begin(query_results),
-//               std::end(query_results),
-//               [](const AlignStats &a, const AlignStats &b)
-//               {
-//                   return a.pctIdentity > b.pctIdentity;
-//               });
-
-//     return query_results;
-// }
 
 inline similarity::ObjectVector CreateDataset(size_t n, size_t offset = 0) {
   similarity::ObjectVector indices;
@@ -88,25 +61,17 @@ inline similarity::ObjectVector CreateDataset(size_t n, size_t offset = 0) {
 }
 
 void SpectrumQueryIndexCommand::run() const {
-#if 1
-  // NeedlemanWunschAligner aligner;
-  // AlignmentSpace<NeedlemanWunschAligner> nwspace(aligner);
 
   // Read database
   auto path = m_params.database_path;
   if (m_params.index_algorithm != IndexAlgorithm::bruteforce) {
     path /= "sequences.fa";
   }
-  // FASTASequenceReader reader(path);
-  // SequenceContainer database(reader);
 
   auto spectra = deserialize(m_params.database_path / "spectra.bin");
   auto indices = CreateDataset(spectra.size());
 
   // Read query sequences
-  // FASTASequenceReader query_reader(m_params.query_path);
-  // SequenceContainer queries(query_reader);
-
   auto query_spectra =
       LoadSpectraFromFile(m_params.query_path, m_params.kmer_size);
   auto query_indices = CreateDataset(query_spectra.size(), spectra.size());
@@ -162,9 +127,4 @@ void SpectrumQueryIndexCommand::run() const {
                             knnquery.Result(), spectra);
     m_writer.display(query_results, std::cout);
   }
-
-  // if (m_params.instrumentation) {
-  //     std::cerr << "Calls to aligner: " << aligner.ncalls() << std::endl;
-  // }
-#endif
 }

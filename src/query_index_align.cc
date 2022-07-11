@@ -69,7 +69,7 @@ void AlignQueryIndexCommand::run() const
     similarity::initLibrary(seed, LIB_LOGNONE, NULL);
 
     // Create index
-    similarity::AnyParams queryParams;
+   auto queryParams = getQueryParameters();
     std::string method_name;
 
     if (m_params.index_algorithm == IndexAlgorithm::hnsw)
@@ -79,7 +79,6 @@ void AlignQueryIndexCommand::run() const
     else if (m_params.index_algorithm == IndexAlgorithm::vptree)
     {
         method_name = METH_VPTREE;
-        queryParams = similarity::AnyParams({"alphaLeft=1.0", "alphaRight=1.0"});
     }
     else if (m_params.index_algorithm == IndexAlgorithm::bruteforce)
     {

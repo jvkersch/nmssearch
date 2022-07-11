@@ -64,7 +64,7 @@ void SpectrumQueryIndexCommand::run() const {
 
   // Read database
   auto path = m_params.database_path;
-  if (m_params.index_algorithm != IndexAlgorithm::bruteforce) {
+  if (m_params.index_algorithm != IndexAlgorithm::bruteforce_kmer) {
     path /= "sequences.fa";
   }
 
@@ -102,7 +102,7 @@ void SpectrumQueryIndexCommand::run() const {
       similarity::MethodFactoryRegistry<float>::Instance().CreateMethod(
           true, method_name, "custom", space, indices));
 
-  if (m_params.index_algorithm == IndexAlgorithm::bruteforce) {
+  if (m_params.index_algorithm == IndexAlgorithm::bruteforce_kmer) {
     index->CreateIndex(queryParams);
   } else {
     index->LoadIndex(m_params.database_path / "index.bin");

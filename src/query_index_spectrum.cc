@@ -89,7 +89,7 @@ void SpectrumQueryIndexCommand::run() const {
   similarity::initLibrary(seed, LIB_LOGNONE, NULL);
 
   // Create index
-  similarity::AnyParams queryParams;
+  similarity::AnyParams queryParams = getQueryParameters();
   std::string method_name;
 
   if (m_params.index_algorithm == IndexAlgorithm::hnsw) {

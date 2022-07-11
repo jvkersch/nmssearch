@@ -20,6 +20,7 @@ add_library(libnmssearch STATIC
     src/kmer_space.cc
     src/nw_align.cc 
     src/sequence_reader.cc 
+    src/query_index.cc
     src/query_index_align.cc 
     src/query_index_spectrum.cc
     src/sequence_container.cc
@@ -30,13 +31,11 @@ set_target_properties(libnmssearch PROPERTIES OUTPUT_NAME "nmssearch")
 
 # For NMSLIB we have to set the include path manually, since it is not specified in the library CMakeLists.txt
 target_link_libraries(libnmssearch PUBLIC NonMetricSpaceLib)
-target_include_directories(libnmssearch PRIVATE "${PROJECT_SOURCE_DIR}/external/nmslib/similarity_search/include")
-
-target_include_directories(libnmssearch PRIVATE "${PROJECT_SOURCE_DIR}/external/cli11")
-
-target_include_directories(libnmssearch PRIVATE "${PROJECT_SOURCE_DIR}/external/cereal/include")
-
 target_link_libraries(libnmssearch PUBLIC parasail)
+
+target_include_directories(libnmssearch PRIVATE "${PROJECT_SOURCE_DIR}/external/nmslib/similarity_search/include")
+target_include_directories(libnmssearch PRIVATE "${PROJECT_SOURCE_DIR}/external/cli11")
+target_include_directories(libnmssearch PRIVATE "${PROJECT_SOURCE_DIR}/external/cereal/include")
 
 find_package(Threads REQUIRED)
 target_link_libraries(libnmssearch PRIVATE Threads::Threads)
@@ -54,6 +53,9 @@ endif()
 # Main executable
 add_executable(nmssearch src/main.cc)
 target_link_libraries(nmssearch PRIVATE libnmssearch)
+target_include_directories(nmssearch PRIVATE "${PROJECT_SOURCE_DIR}/external/nmslib/similarity_search/include")
+target_include_directories(nmssearch PRIVATE "${PROJECT_SOURCE_DIR}/external/cli11")
+target_include_directories(nmssearch PRIVATE "${PROJECT_SOURCE_DIR}/external/cereal/include")
 
 # Unit tests
 add_subdirectory("external/Catch2")

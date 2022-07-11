@@ -6,6 +6,7 @@
 #include "output_writer.h"
 #include "parameters.h"
 #include "query_index_align.h"
+#include "query_index_spectrum.h"
 #include "errors.h"
 
 int main(int argc, char *argv[])
@@ -24,7 +25,12 @@ int main(int argc, char *argv[])
             BuildIndexCommand(params).run();
             break;
         case RunMode::query:
-            AlignQueryIndexCommand(params, writer).run();
+            // FIXME: This is horrible
+            if ((params.index_algorithm == IndexAlgorithm::bruteforce_kmer) || (params.index_algorithm == IndexAlgorithm::hnsw_kmer)) {
+                SpectrumQueryIndexCommand(params, writer).run();
+            } else {
+                AlignQueryIndexCommand(params, writer).run();
+            }
             break;
         case RunMode::dump:
             DumpIndexCommand(params).run();

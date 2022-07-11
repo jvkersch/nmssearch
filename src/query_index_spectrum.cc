@@ -92,12 +92,9 @@ void SpectrumQueryIndexCommand::run() const {
   similarity::AnyParams queryParams;
   std::string method_name;
 
-  if (m_params.index_algorithm == IndexAlgorithm::hnsw) {
+  if (m_params.index_algorithm == IndexAlgorithm::hnsw_kmer) {
     method_name = METH_HNSW;
-  } else if (m_params.index_algorithm == IndexAlgorithm::vptree) {
-    method_name = METH_VPTREE;
-    queryParams = similarity::AnyParams({"alphaLeft=1.0", "alphaRight=1.0"});
-  } else if (m_params.index_algorithm == IndexAlgorithm::bruteforce) {
+  } else if (m_params.index_algorithm == IndexAlgorithm::bruteforce_kmer) {
     method_name = METH_SEQ_SEARCH;
   }
 

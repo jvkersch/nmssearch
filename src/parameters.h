@@ -59,10 +59,14 @@ constexpr const char *IndexAlgorithmToString(IndexAlgorithm algorithm)
         return "vantage point tree";
     case IndexAlgorithm::hnsw:
         return "HNSW";
+    case IndexAlgorithm::hnsw_kmer:
+        return "HNSW (kmer spectrum)";
     case IndexAlgorithm::bruteforce:
         return "Bruteforce";
+    case IndexAlgorithm::bruteforce_kmer:
+        return "Bruteforce (kmer spectrum)";
     default:
-        throw std::invalid_argument("Invalid algorithm");
+        return "Unknown";
     }
 }
 

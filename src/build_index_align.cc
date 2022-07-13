@@ -19,7 +19,7 @@ namespace fs = std::filesystem;
 
 void AlignBuildIndexCommand::run() const
 {
-    NeedlemanWunschAligner aligner;
+    NeedlemanWunschAligner aligner(m_params.gap_open, m_params.gap_extend);
     AlignmentSpace<NeedlemanWunschAligner> nwspace(aligner);
 
     std::cerr << "Building index for " << m_params.sequences_path << " using algorithm "

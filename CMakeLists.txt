@@ -61,6 +61,7 @@ target_include_directories(nmssearch PRIVATE "${PROJECT_SOURCE_DIR}/external/cer
 add_subdirectory("external/Catch2")
 
 add_executable(test_nmssearch
+   tests/test_build_index.cc
    tests/test_kmer_space.cc
    tests/test_output_writer.cc
    tests/test_parameter_handling.cc

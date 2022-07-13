@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "build_index.h"
+#include "build_index_align.h"
 #include "command_parser.h"
 #include "dump_index.h"
 #include "output_writer.h"
@@ -21,7 +21,7 @@ int main(int argc, char *argv[])
         switch (params.mode)
         {
         case RunMode::build:
-            BuildIndexCommand(params).run();
+            AlignBuildIndexCommand(params).run();
             break;
         case RunMode::query:
             AlignQueryIndexCommand(params, writer).run();

@@ -3,7 +3,7 @@
 #include <filesystem>
 
 #include "parameters.h"
-#include "build_index.h"
+#include "build_index_align.h"
 
 #include "testing_helpers.h"
 
@@ -13,7 +13,7 @@ void require_exists(fs::path p) {
     REQUIRE(fs::exists(p));
 }
 
-TEST_CASE("can build an index", "[build-index]") {
+TEST_CASE("can build an index (align mode)", "[build-index]") {
     
     SECTION("hnsw") {
 
@@ -22,7 +22,7 @@ TEST_CASE("can build an index", "[build-index]") {
         params.index_algorithm = IndexAlgorithm::hnsw;
         params.sequences_path = testing_artifact("seqs-small.fa");
         params.database_path = "seqs-small-tmp.bin";
-        BuildIndexCommand command(params);
+        AlignBuildIndexCommand command(params);
 
         // When
         command.run();
@@ -40,7 +40,7 @@ TEST_CASE("can build an index", "[build-index]") {
         params.index_algorithm = IndexAlgorithm::vptree;
         params.sequences_path = testing_artifact("seqs-small.fa");
         params.database_path = "seqs-small-tmp.bin";
-        BuildIndexCommand command(params);
+        AlignBuildIndexCommand command(params);
 
         // When
         command.run();

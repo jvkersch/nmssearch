@@ -1,5 +1,5 @@
-#ifndef _BUILD_COMMAND_H_
-#define _BUILD_COMMAND_H_
+#ifndef _BUILD_INDEX_H_
+#define _BUILD_INDEX_H_
 
 #include "parameters.h"
 
@@ -7,10 +7,10 @@ class BuildIndexCommand
 {
 public:
     BuildIndexCommand(const Parameters &params) : m_params(params) {}
-    void run() const;
+    virtual void run() const = 0;
 
-private:
+protected:
     const Parameters &m_params;
 };
 
-#endif // _BUILD_COMMAND_H_
+#endif // _BUILD_INDEX_H_

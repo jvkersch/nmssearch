@@ -4,15 +4,13 @@
 #include <parasail.h>
 #include <parasail/matrices/nuc44.h>
 
-NeedlemanWunschAligner::NeedlemanWunschAligner()
-{
-}
 
 int NeedlemanWunschAligner::align(const char *s1, size_t len1, const char *s2, size_t len2) const
 {
     m_ncalls++;
 
-    parasail_result_t *result = parasail_nw_scan_16(s1, len1, s2, len2, 12, 4, &parasail_nuc44);
+    parasail_result_t *result = parasail_nw_scan_16(
+        s1, len1, s2, len2, m_gap_open, m_gap_extend, &parasail_nuc44);
     int score = parasail_result_get_score(result);
     parasail_result_free(result);
 
@@ -27,7 +25,7 @@ AlignStats NeedlemanWunschAligner::align_stats(const FASTASequence &seq1, const 
     auto s2 = seq2.sequence;
 
     parasail_result_t *result = parasail_nw_stats_scan_16(
-        s1.c_str(), s1.size(), s2.c_str(), s2.size(), 12, 4, &parasail_nuc44);
+        s1.c_str(), s1.size(), s2.c_str(), s2.size(), m_gap_open, m_gap_extend, &parasail_nuc44);
     int length = parasail_result_get_length(result);
     int score = parasail_result_get_score(result);
 

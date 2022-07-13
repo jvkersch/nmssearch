@@ -1,5 +1,5 @@
-#ifndef _BUILD_INDEX_ALIGN_H_
-#define _BUILD_INDEX_ALIGN_H_
+#ifndef _BUILD_INDEX_SPECTRUM_H_
+#define _BUILD_INDEX_SPECTRUM_H_
 
 #include "build_index.h"
 #include "parameters.h"
@@ -11,4 +11,4 @@ public:
     void run() const override;
 };
 
-#endif // _BUILD_INDEX_ALIGN_H_
+#endif // _BUILD_INDEX_SPECTRUM_H_

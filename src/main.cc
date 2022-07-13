@@ -1,11 +1,13 @@
 #include <iostream>
 
 #include "build_index_align.h"
+#include "build_index_spectrum.h"
 #include "command_parser.h"
 #include "dump_index.h"
 #include "output_writer.h"
 #include "parameters.h"
 #include "query_index_align.h"
+#include "query_index_spectrum.h"
 #include "errors.h"
 
 int main(int argc, char *argv[])
@@ -21,10 +23,19 @@ int main(int argc, char *argv[])
         switch (params.mode)
         {
         case RunMode::build:
-            AlignBuildIndexCommand(params).run();
+            // FIXME: Replace by factory (here and below)
+            if ((params.index_algorithm == IndexAlgorithm::bruteforce_kmer) || (params.index_algorithm == IndexAlgorithm::hnsw_kmer)) {
+                SpectrumBuildIndexCommand(params).run();
+            } else {
+                AlignBuildIndexCommand(params).run();
+            }
             break;
         case RunMode::query:
-            AlignQueryIndexCommand(params, writer).run();
+            if ((params.index_algorithm == IndexAlgorithm::bruteforce_kmer) || (params.index_algorithm == IndexAlgorithm::hnsw_kmer)) {
+                SpectrumQueryIndexCommand(params, writer).run();
+            } else {
+                AlignQueryIndexCommand(params, writer).run();
+            }
             break;
         case RunMode::dump:
             DumpIndexCommand(params).run();

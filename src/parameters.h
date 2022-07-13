@@ -61,6 +61,10 @@ constexpr const char *IndexAlgorithmToString(IndexAlgorithm algorithm)
         return "HNSW";
     case IndexAlgorithm::bruteforce:
         return "Bruteforce";
+    case IndexAlgorithm::hnsw_kmer:
+        return "HNSW (kmer)";
+    case IndexAlgorithm::bruteforce_kmer:
+        return "Bruteforce (kmer)";
     default:
         throw std::invalid_argument("Invalid algorithm");
     }

@@ -9,9 +9,6 @@
 
 namespace fs = std::filesystem;
 
-void require_exists(fs::path p) {
-    REQUIRE(fs::exists(p));
-}
 
 TEST_CASE("can build an index (align mode)", "[build-index]") {
     

@@ -16,7 +16,7 @@ TEST_CASE("Query the index in spectrum mode", "[query-spectrum]") {
     SECTION("hnsw") {
         // Given
         Parameters params;
-        params.index_algorithm = IndexAlgorithm::hnsw;
+        params.index_algorithm = IndexAlgorithm::hnsw_kmer;
         params.database_path = testing_artifact("hnsw-spectrum-small.bin");
         params.query_path = testing_artifact("query-small.fa");
         params.kmer_length = 2;

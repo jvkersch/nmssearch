@@ -64,7 +64,7 @@ void SpectrumQueryIndexCommand::run() const {
 
   // Read database
   auto path = m_params.database_path;
-  if (m_params.index_algorithm != IndexAlgorithm::bruteforce) {
+  if (m_params.index_algorithm != IndexAlgorithm::bruteforce_kmer) {
     path /= "sequences.fa";
   }
 
@@ -92,12 +92,12 @@ void SpectrumQueryIndexCommand::run() const {
   similarity::AnyParams queryParams = getQueryParameters();
   std::string method_name;
 
-  if (m_params.index_algorithm == IndexAlgorithm::hnsw) {
+  if (m_params.index_algorithm == IndexAlgorithm::hnsw_kmer) {
     method_name = METH_HNSW;
-  } else if (m_params.index_algorithm == IndexAlgorithm::vptree) {
-    method_name = METH_VPTREE;
-    queryParams = similarity::AnyParams({"alphaLeft=1.0", "alphaRight=1.0"});
-  } else if (m_params.index_algorithm == IndexAlgorithm::bruteforce) {
+  // } else if (m_params.index_algorithm == IndexAlgorithm::vptree) {
+  //   method_name = METH_VPTREE;
+  //   queryParams = similarity::AnyParams({"alphaLeft=1.0", "alphaRight=1.0"});
+  } else if (m_params.index_algorithm == IndexAlgorithm::bruteforce_kmer) {
     method_name = METH_SEQ_SEARCH;
   }
 
@@ -105,7 +105,7 @@ void SpectrumQueryIndexCommand::run() const {
       similarity::MethodFactoryRegistry<float>::Instance().CreateMethod(
           true, method_name, "custom", space, indices));
 
-  if (m_params.index_algorithm == IndexAlgorithm::bruteforce) {
+  if (m_params.index_algorithm == IndexAlgorithm::bruteforce_kmer) {
     index->CreateIndex(queryParams);
   } else {
     index->LoadIndex(m_params.database_path / "index.bin");

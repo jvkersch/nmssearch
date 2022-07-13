@@ -8,6 +8,9 @@
 #include <string>
 #include <sstream>
 
+#include <catch2/catch_test_macros.hpp>
+
+
 namespace fs = std::filesystem;
 
 
@@ -40,6 +43,10 @@ inline fs::path testing_artifact(std::string name) {
         throw std::runtime_error(ss.str());
     }
     return full_path;
+}
+
+inline void require_exists(fs::path p) {
+    REQUIRE(fs::exists(p));
 }
 
 #endif // _TESTING_HELPERS_H_

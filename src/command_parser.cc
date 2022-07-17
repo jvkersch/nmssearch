@@ -77,6 +77,18 @@ void AddToplevelArguments(CLI::App &app, Parameters &params)
         params.efConstruction,
         "Size of dynamic neighbor lists (during construction) (for HNSW)"
     );
+
+    // Alignment parameters
+    app.add_option(
+        "--gap-open",
+        params.gap_open,
+        "Gap open penalty (alignment)"
+    );
+    app.add_option(
+        "--gap-extend",
+        params.gap_extend,
+        "Gap extend penalty (alignment)"
+    );
 }
 
 CLI::App *AddBuildSubCommand(CLI::App &app, Parameters &params)

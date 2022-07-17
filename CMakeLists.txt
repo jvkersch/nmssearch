@@ -66,6 +66,7 @@ add_executable(test_nmssearch
    tests/test_build_index_align.cc
    tests/test_build_index_spectrum.cc
    tests/test_kmer_space.cc
+   tests/test_nw_aligner.cc
    tests/test_output_writer.cc
    tests/test_parameter_handling.cc
    tests/test_query_index.cc

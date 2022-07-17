@@ -49,6 +49,11 @@ public:
     int efConstruction = 200;
     // KMer length for spectral-based methods;
     int kmer_length = 7;
+
+    // Gap open penalty (align mode)
+    int gap_open = 12;
+    // Gap extend penalty (align mode)
+    int gap_extend = 4;
 };
 
 constexpr const char *IndexAlgorithmToString(IndexAlgorithm algorithm)

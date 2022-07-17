@@ -23,5 +23,5 @@ jobs:
     - name: run tests
       run: build/test_nmssearch
     - name: run integration tests
-      working_directory: tests
+      working-directory: tests
       run: python3 integration_tests.py

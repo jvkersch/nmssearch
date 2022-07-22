@@ -1,3 +1,4 @@
+import os
 import os.path as op
 import shutil
 import subprocess
@@ -5,7 +6,7 @@ import tempfile
 import unittest
 
 # Set this to True to update the test case data in place.
-UPDATE_TESTCASES = False
+UPDATE_TESTCASES = bool(os.environ.get("UPDATE_TESTCASES", False))
 
 
 def run_nmssearch(args, **kwds):

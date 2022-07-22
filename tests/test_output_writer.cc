@@ -38,8 +38,8 @@ TEST_CASE( "AlignStats are displayed correctly", "[output]" ) {
 
     OutputWriter writer;
 
-    std::string expected1 = "query1\tsubject1\t95.80\t200\t20\t10\t1\t201\t2\t202\t0.00\t1024\n";
-    std::string expected2 = "query2\tsubject2\t99.90\t200\t20\t10\t1\t201\t2\t202\t0.00\t1024\n";
+    std::string expected1 = "query1\tsubject1\t95.800\t200\t20\t10\t1\t201\t2\t202\t0.00\t1024\n";
+    std::string expected2 = "query2\tsubject2\t99.900\t200\t20\t10\t1\t201\t2\t202\t0.00\t1024\n";
 
     SECTION("Single records are displayed correctly") {
         std::stringstream ss;

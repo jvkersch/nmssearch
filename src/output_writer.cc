@@ -11,7 +11,8 @@ void OutputWriter::display(const AlignStats &r, std::ostream& output) const
 {
     output << r.queryId << '\t'
               << r.subjectId << '\t'
-              << std::fixed << std::setprecision(2) << r.pctIdentity << '\t'
+              << std::fixed << std::setprecision(3) << r.pctIdentity
+              << std::fixed << std::setprecision(2) <<'\t'
               << r.alignmentLength << '\t'
               << r.mismatches << '\t'
               << r.gapOpenings << '\t'
